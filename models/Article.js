@@ -50,6 +50,10 @@ const ArticleSchema = new Schema({
       }
     }
   ],
+  visits: {
+    type: Number,
+    default: 0
+  },
   createdOn: {
     type: Date,
     required: true,

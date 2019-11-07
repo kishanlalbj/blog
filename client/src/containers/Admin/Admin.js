@@ -14,7 +14,7 @@ export default class Admin extends Component {
       <div>
         <div
           className="overlay"
-          style={{ backgroundColor: "grey", height: "10vh" }}
+          style={{ backgroundColor: "black", height: "10vh" }}
         ></div>
         <Container>
           <div style={{ marginTop: "2%" }}>

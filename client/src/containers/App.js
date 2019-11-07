@@ -8,6 +8,7 @@ import Home from "./Home/Home";
 import About from "./About/About";
 import Admin from "./Admin/Admin";
 import Article from "./Article/Article";
+import ArticleBuilder from "./ArticleBuilder/ArticleBuilder";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/about" component={About} />
           <Route exact path="/admin" component={Admin} />
           <Route exact path="/article" component={Article} />
+          <Route exact path="/article/add" component={ArticleBuilder} />
         </Switch>
         <Footer />
       </Router>
