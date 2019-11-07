@@ -16,10 +16,6 @@ const UserSchema = new Schema({
     unique: true,
     length: 10
   },
-  isAdmin: {
-    type: Boolean,
-    default: false
-  },
   email: {
     type: String,
     required: true

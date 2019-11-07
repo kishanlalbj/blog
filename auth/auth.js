@@ -54,7 +54,7 @@ router.post("/login", (req, res) => {
           };
           jwt.sign(
             payload,
-            process.env.JWT_SECRET,
+            process.env.JWT_SECRET || "secretkey",
             { expiresIn: 2000 },
             (err, token) => {
               if (err) throw err;
