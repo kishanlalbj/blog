@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../../containers/App.css";
 import "./Hero.css";
+import avatar from "../../assets/img/avatar.png";
 
 export default class Hero extends Component {
   render() {
@@ -18,10 +19,27 @@ export default class Hero extends Component {
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
                 <div className="site-heading">
-                  <h1>Scribbles</h1>
-                  <span className="subheading">
-                    Things inside my head are now here
-                  </span>
+                  {this.props.isAbout ? (
+                    <div>
+                      <img
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: "4000px"
+                        }}
+                        src={avatar}
+                        alt="avatar"
+                        height="150"
+                        width="150"
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <h1>Scribbles</h1>
+                      <span className="subheading">
+                        Things inside my head are now here
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

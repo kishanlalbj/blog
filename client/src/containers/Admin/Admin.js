@@ -1,15 +1,43 @@
 import React, { Component } from "react";
-import Hero from "../../components/Hero/Hero";
+import moment from "moment";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import {
   Container,
   Button,
   Table,
   InputGroup,
-  FormControl
+  FormControl,
+  Modal
 } from "react-bootstrap";
+import { timingSafeEqual } from "crypto";
 
-export default class Admin extends Component {
+class Admin extends Component {
+  state = {
+    articles: [],
+    totalPosts: 0
+  };
+
+  componentDidMount() {
+    console.log(this.props.auth.isAuthenticated);
+    if (!this.props.auth.isAuthenticated) {
+      console.log("Hello");
+      this.props.history.push("/");
+    } else {
+      fetch("/api/articles")
+        .then(response => response.json())
+        .then(articles => {
+          console.log(articles);
+          this.setState({ articles });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+
   render() {
+    let { articles } = this.state;
     return (
       <div>
         <div
@@ -20,7 +48,13 @@ export default class Admin extends Component {
           <div style={{ marginTop: "2%" }}>
             <h2 style={{ float: "left" }}> Dashboard </h2>
             <div style={{ float: "right" }}>
-              <Button> Create Article</Button>
+              <Link to="/profile">
+                <Button variant="warning"> Edit Profile </Button>
+              </Link>
+              &nbsp;
+              <Link to="/add">
+                <Button> Create Article </Button>
+              </Link>
             </div>
           </div>
 
@@ -38,13 +72,68 @@ export default class Admin extends Component {
               </InputGroup.Append>
             </InputGroup>
 
-            <h5>
-              Total Articles: <span> 4 </span>
-            </h5>
+            <div class="row">
+              <div class="col-md-9">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Latest Posts</h4>
+                  </div>
+                  <Table responsive class="table table-striped">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>S.No</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {articles.map((article, index) => {
+                        return (
+                          <tr>
+                            <td>{index + 1}</td>
+                            <td>{article.articleTitle}</td>
+                            <td>{article.articleCategory}</td>
+                            <td>{moment(article.createdOn).format("ll")}</td>
+                            <td>
+                              <Link to={"/article/" + article._id}>
+                                <i class="fas fa-eye"></i> View
+                              </Link>
+                            </td>
+                            <td>
+                              <Link to={"/article/" + article._id}>
+                                <i class="fas fa-edit"></i> Edit
+                              </Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card text-center bg-primary text-white mb-3">
+                  <div class="card-body">
+                    <h3>Posts</h3>
+                    <h4 class="display-4">
+                      <i class="fas fa-pencil-alt"></i> {articles.length}
+                    </h4>
+                  </div>
+                </div>
 
-            <h5>
-              Total Views: <span> 54 </span>
-            </h5>
+                <div class="card text-center bg-success text-white mb-3">
+                  <div class="card-body">
+                    <h3>Views</h3>
+                    <h4 class="display-4">
+                      <i class="fas fa-eye"></i> 234
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
         <div style={{ clear: "both" }}></div>
@@ -53,3 +142,11 @@ export default class Admin extends Component {
     );
   }
 }
+
+const mapStateToProp = state => ({
+  auth: state.auth,
+  isAuthenticated: state.isAuthenticated,
+  err: state.err
+});
+
+export default connect(mapStateToProp)(withRouter(Admin));

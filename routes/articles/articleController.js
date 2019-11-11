@@ -11,8 +11,20 @@ const getArticles = (successCB, errorCB) => {
   );
 };
 
-const addArticle = (article, success, errorCB) => {
-  let newarticle = new Article({ article });
+getArticle = (id, successCB, errorCB) => {
+  Article.findById({ _id: id })
+    .then(article => {
+      console.log(JSON.stringify(article, undefined, 2));
+      successCB(article);
+    })
+    .catch(err => {
+      errorCB(err);
+    });
+};
+
+const addArticle = (article, successCB, errorCB) => {
+  console.log(JSON.stringify(article, undefined, 2));
+  let newarticle = new Article(article);
 
   newarticle
     .save()
@@ -47,5 +59,6 @@ module.exports = {
   getArticles,
   addArticle,
   deleteArticle,
-  updateArticle
+  updateArticle,
+  getArticle
 };

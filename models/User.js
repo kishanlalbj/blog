@@ -10,11 +10,13 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  username: {
+  bio: {
     type: String,
-    required: true,
-    unique: true,
-    length: 10
+    required: true
+  },
+  avatar: {
+    type: String,
+    default: "images/avatar.png"
   },
   email: {
     type: String,

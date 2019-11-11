@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./ArticleHero.css";
+import moment from "moment";
 
 class ArticleHero extends Component {
   render() {
@@ -11,7 +12,8 @@ class ArticleHero extends Component {
             background:
               'url("https://wallup.net/wp-content/uploads/2017/03/28/270544-city-cityscape-Rio_de_Janeiro-Brazil-clouds-hill-sea-sunset-748x421.jpg")',
             backgroundRepeat: "no-repeat",
-            backgroundSize: "cover"
+            backgroundSize: "cover",
+            height: "100vh"
           }}
         >
           <div className="overlay"></div>
@@ -19,16 +21,12 @@ class ArticleHero extends Component {
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
                 <div className="post-heading">
-                  <h1>
-                    Man must explore, and this is exploration at its greatest
-                  </h1>
-                  <h2 className="subheading">
-                    Problems look mighty small from 150 miles up
-                  </h2>
+                  <h1>{this.props.articleTitle}</h1>
+                  <h2 className="subheading">{this.props.articleSubtitle}</h2>
                   <span className="meta">
-                    Posted by
-                    <a href="#">Start Bootstrap</a>
-                    on August 24, 2019
+                    Posted by &nbsp;
+                    <a href="#">{this.props.author}</a> &nbsp; on{" "}
+                    {moment(this.props.createdOn).format("LL")}
                   </span>
                 </div>
               </div>

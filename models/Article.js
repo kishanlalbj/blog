@@ -6,15 +6,23 @@ const ArticleSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "users"
   },
-  title: {
+  articleTitle: {
     type: String,
     required: true
   },
-  category: {
+  articleSubtitle: {
     type: String,
     required: true
   },
-  text: {
+  // articleCover: {
+  //   type: String,
+  //   required: true
+  // },
+  articleCategory: {
+    type: String,
+    required: true
+  },
+  articleContent: {
     type: String,
     required: true
   },
@@ -22,34 +30,34 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  likes: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users"
-      }
-    }
-  ],
-  comments: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users"
-      },
-      commenterName: {
-        type: String,
-        required: true
-      },
-      commentText: {
-        type: String,
-        required: true
-      },
-      createdOn: {
-        type: String,
-        required: true
-      }
-    }
-  ],
+  // likes: [
+  //   {
+  //     user: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "users"
+  //     }
+  //   }
+  // ],
+  // comments: [
+  //   {
+  //     user: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "users"
+  //     },
+  //     commenterName: {
+  //       type: String,
+  //       required: true
+  //     },
+  //     commentText: {
+  //       type: String,
+  //       required: true
+  //     },
+  //     createdOn: {
+  //       type: String,
+  //       required: true
+  //     }
+  //   }
+  // ],
   visits: {
     type: Number,
     default: 0

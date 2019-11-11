@@ -8,18 +8,28 @@ class Login extends Component {
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              name="email"
+              onChange={e => this.props.handleChange(e)}
+            />
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={e => this.props.handleChange(e)}
+            />
           </Form.Group>
-
-          <Button variant="primary" onClick={this.props.onLogin}>
-            Login
-          </Button>
-          {/* <a href="#">Forgot Password ?</a> */}
+          <center>
+            <Button variant="primary" onClick={this.props.onLogin}>
+              Login
+            </Button>
+          </center>
         </Form>
       </div>
     );

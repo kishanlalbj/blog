@@ -9,7 +9,6 @@ router.get("/dashboard", (req, res) => {
   }
 });
 
-
 router.post("/post/article", (req, res) => {
   try {
     res.send({ message: "article Posted" });
@@ -17,3 +16,5 @@ router.post("/post/article", (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 });
+
+module.exports = router;

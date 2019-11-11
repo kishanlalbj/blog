@@ -16,6 +16,23 @@ router.get("/", (req, res) => {
   }
 });
 
+router.get("/:id", (req, res) => {
+  try {
+    console.log(req.params.id);
+    articleController.getArticle(
+      req.params.id,
+      article => {
+        res.send(article);
+      },
+      error => {
+        throw error;
+      }
+    );
+  } catch (error) {
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
 router.post("/add", (req, res) => {
   try {
     articleController.addArticle(

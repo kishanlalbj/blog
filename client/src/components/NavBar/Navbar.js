@@ -1,38 +1,83 @@
 import React, { Component } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, DropdownButton, Dropdown } from "react-bootstrap";
 import "../../containers/App.css";
 import Login from "../Login/Login";
 import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginUser, logoutUser } from "../../actions/authActions";
 
 class Navbar extends Component {
   state = {
     showLogin: false,
-    isLoggedin: true,
+    isLoggedin: false,
     message: "",
-    username: "",
+    email: "",
     password: ""
   };
 
   toggleLogin = () => {
-    console.log(this.state.showLogin);
     let show = this.state.showLogin;
+
     this.setState({ showLogin: !show });
   };
 
+  logout = () => {
+    console.log(this.props.auth);
+    this.props.logoutUser(this.props.history);
+  };
   login = () => {
-    console.log("Login");
-    if (
-      this.state.username === "test@gmail.com" &&
-      this.state.password === "test"
-    ) {
-      let copyIsLogged = this.state.isLoggedin;
-      let copyMessage = this.state.message;
-      this.setState({ isLoggedin: !copyIsLogged, message: "Successfully" });
-    } else {
-      this.setState({
-        message: "Invalid Credentials"
-      });
-    }
+    let { email, password } = this.state;
+    let userData = {
+      email,
+      password
+    };
+    this.props.loginUser(userData, this.props.history);
+    console.log(this.props.auth);
+
+    this.setState({
+      isLoggedin: this.props.auth.isAuthenticated,
+      message: "",
+      email: "",
+      password: "",
+      showLogin: false
+    });
+
+    // fetch("/api/auth/login", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({ email, password })
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log(data);
+    //     let copyIsLogged = this.state.isLoggedin;
+    //     let copyMessage = this.state.message;
+    //     this.setState(
+    //       {
+    //         isLoggedin: !copyIsLogged,
+    //         message: "",
+    //         email: "",
+    //         password: "",
+    //         showLogin: false
+    //       },
+    //       () => {
+    //         const { pathname } = this.props.location;
+    //         this.props.history.push(pathname);
+    //       }
+    //     );
+    //   })
+    //   .catch(err => {
+    //     this.setState({
+    //       message: "Invalid Credentials"
+    //     });
+    //   });
+  };
+
+  handleChange = e => {
+    console.log(e.target.name, e.target.value);
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
@@ -71,25 +116,42 @@ class Navbar extends Component {
                   </Link>
                 </li>
 
-                <li className="nav-item">
-                  <Link to="/article" className="nav-link">
-                    Article
-                  </Link>
-                </li>
-
-                <li className="nav-item">
-                  <Button
-                    className="nav-link"
-                    style={{
-                      color: "white",
-                      backgroundColor: "transparent"
-                      // borderColor: "transparent"
-                    }}
-                    onClick={this.toggleLogin}
-                  >
-                    Login
-                  </Button>
-                </li>
+                {this.props.auth.isAuthenticated ? (
+                  <>
+                    <li className="nav-item">
+                      <Link to="/admin" className="nav-link">
+                        Dashboard
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Button
+                        className="nav-link"
+                        style={{
+                          color: "white",
+                          backgroundColor: "transparent",
+                          borderColor: "white"
+                        }}
+                        onClick={this.logout}
+                      >
+                        Logout
+                      </Button>
+                    </li>
+                  </>
+                ) : (
+                  <li className="nav-item">
+                    <Button
+                      className="nav-link"
+                      style={{
+                        color: "white",
+                        backgroundColor: "transparent",
+                        borderColor: "white"
+                      }}
+                      onClick={this.toggleLogin}
+                    >
+                      Login
+                    </Button>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
@@ -97,10 +159,12 @@ class Navbar extends Component {
 
         <Modal show={this.state.showLogin} onHide={this.toggleLogin}>
           <Modal.Header closeButton>
-            <Modal.Title>Login</Modal.Title>
+            <center>
+              <h4> Welcome back Admin...! </h4>{" "}
+            </center>
           </Modal.Header>
           <Modal.Body>
-            <Login onLogin={this.login} />
+            <Login onLogin={this.login} handleChange={this.handleChange} />
             {this.state.message}
           </Modal.Body>
         </Modal>
@@ -109,4 +173,13 @@ class Navbar extends Component {
   }
 }
 
-export default withRouter(Navbar);
+const mapStateToProp = state => ({
+  auth: state.auth,
+  isAuthenticated: state.isAuthenticated,
+  err: state.err
+});
+
+export default connect(
+  mapStateToProp,
+  { loginUser, logoutUser }
+)(withRouter(Navbar));
