@@ -8,25 +8,52 @@ import axios from "axios";
 class Home extends Component {
   state = {
     articles: [],
-    page: 0
+    page: 1,
+    limit: 1,
+    pagination: {}
   };
 
-  componentDidMount() {
+  getArticles = page => {
     axios
-      .get("/api/articles")
+      .get(`/api/articles?page=${page}&limit=1`)
       // .then(response => response.json())
       .then(response => {
         console.log(response.data);
-        this.setState({ articles: response.data });
+
+        if (response.data.results.length === 0) {
+          this.setState({
+            message: "No Articles Found"
+          });
+        } else {
+          this.setState({
+            articles: response.data.results,
+            pagination: response.data
+          });
+        }
       })
       .catch(err => {
         console.log(err);
       });
+  };
+
+  componentDidMount() {
+    this.getArticles(this.state.page);
   }
 
   openArticle = id => {
     this.props.history.push(`/article/${id}`);
   };
+
+  next = () => {
+    let page = this.state.pagination.next.page;
+    this.getArticles(page);
+  };
+
+  previous = () => {
+    let page = this.state.pagination.previous.page;
+    this.getArticles(page);
+  };
+
   render() {
     const { articles } = this.state;
     return (
@@ -43,6 +70,7 @@ class Home extends Component {
                     articleId={article._id}
                     articleTitle={article.articleTitle}
                     articleSubtitle={article.articleSubtitle}
+                    articleCategory={article.articleCategory}
                     user={article.author}
                     views={article.visits}
                     createdOn={moment(article.createdOn).format("LL")}
@@ -51,13 +79,23 @@ class Home extends Component {
               })}
 
               <div className="">
-                <Button className="btn btn-primary float-left">
-                  &larr; Newer Posts
-                </Button>
+                {this.state.pagination.previous !== undefined ? (
+                  <Button
+                    className="btn btn-primary float-left"
+                    onClick={this.previous}
+                  >
+                    &larr; Newer Posts
+                  </Button>
+                ) : null}
 
-                <Button className="btn btn-primary float-right">
-                  Older Posts &rarr;
-                </Button>
+                {this.state.pagination.next !== undefined ? (
+                  <Button
+                    className="btn btn-primary float-right"
+                    onClick={this.next}
+                  >
+                    Older Posts &rarr;
+                  </Button>
+                ) : null}
               </div>
             </div>
           </div>

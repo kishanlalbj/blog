@@ -1,9 +1,18 @@
 const router = require("express").Router();
 const Profile = require("../../models/Profile");
-
+const adminController = require("../admin/adminController");
 router.get("/dashboard", (req, res) => {
   try {
-    res.send();
+    adminController.getArticlesCount(
+      count => {
+        console.log(count);
+        res.send({ totalArticles: count });
+      },
+      err => {
+        console.log(err);
+        throw err;
+      }
+    );
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error" });
   }

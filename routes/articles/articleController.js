@@ -11,7 +11,7 @@ const getArticles = (successCB, errorCB) => {
   );
 };
 
-getArticle = (id, successCB, errorCB) => {
+const getArticle = (id, successCB, errorCB) => {
   Article.findById({ _id: id })
     .then(article => {
       console.log(JSON.stringify(article, undefined, 2));

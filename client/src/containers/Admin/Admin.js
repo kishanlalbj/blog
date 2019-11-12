@@ -10,12 +10,14 @@ import {
   FormControl,
   Modal
 } from "react-bootstrap";
-import { timingSafeEqual } from "crypto";
+import axios from "axios";
 
 class Admin extends Component {
   state = {
     articles: [],
-    totalPosts: 0
+    totalPosts: 0,
+    page: 1,
+    pagination: ""
   };
 
   componentDidMount() {
@@ -24,11 +26,45 @@ class Admin extends Component {
       console.log("Hello");
       this.props.history.push("/");
     } else {
-      fetch("/api/articles")
-        .then(response => response.json())
-        .then(articles => {
-          console.log(articles);
-          this.setState({ articles });
+      // fetch("/api/articles")
+      //   .then(response => response.json())
+      //   .then(articles => {
+      //     console.log(articles);
+      //     this.setState({ articles });
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+
+      axios
+        .get("/api/admin/dashboard")
+        .then(response => {
+          console.log("COUNT", response.data);
+
+          this.setState({
+            totalPosts: response.data.totalArticles
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      axios
+        .get(`/api/articles?page=${this.state.page}&limit=1`)
+        // .then(response => response.json())
+        .then(response => {
+          console.log(response.data);
+
+          if (response.data.results.length === 0) {
+            this.setState({
+              message: "No Articles Found"
+            });
+          } else {
+            this.setState({
+              articles: response.data.results,
+              pagination: response.data
+            });
+          }
         })
         .catch(err => {
           console.log(err);
@@ -75,9 +111,9 @@ class Admin extends Component {
             <div class="row">
               <div class="col-md-9">
                 <div class="card">
-                  <div class="card-header">
+                  {/* <div class="card-header">
                     <h4>Latest Posts</h4>
-                  </div>
+                  </div> */}
                   <Table responsive class="table table-striped">
                     <thead class="thead-dark">
                       <tr>
@@ -119,7 +155,7 @@ class Admin extends Component {
                   <div class="card-body">
                     <h3>Posts</h3>
                     <h4 class="display-4">
-                      <i class="fas fa-pencil-alt"></i> {articles.length}
+                      <i class="fas fa-pencil-alt"></i> {this.state.totalPosts}
                     </h4>
                   </div>
                 </div>

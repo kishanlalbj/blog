@@ -132,11 +132,13 @@ class Profile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-3">
-              <h3>Your Avatar</h3>
+              {/* <h3>Your Avatar</h3> */}
               <img
                 src={avatar}
                 alt="avatar"
-                style={{ borderRadius: "10000px" }}
+                style={{
+                  borderRadius: "10000px"
+                }}
                 className="d-block img-fluid mb-3"
               />
 
@@ -146,71 +148,69 @@ class Profile extends Component {
 
               <button
                 onClick={this.updateImage}
-                className="btn btn-danger btn-block"
+                style={{ width: "66%" }}
+                className="btn btn-danger"
               >
                 upload
               </button>
             </div>
             <div className="col-md-9">
-              <div className="card">
-                <div className="card-header">
-                  <h4>Edit Profile</h4>
-                </div>
-                <div className="card-body">
-                  <form>
-                    <div className="form-group">
-                      <label for="name">First Name</label>
-                      <input
-                        name="firstName"
-                        type="text"
-                        className="form-control"
-                        value={this.state.firstName}
-                        onChange={this.handleChange}
-                      ></input>
-                    </div>
-                    <div className="form-group">
-                      <label for="name">Last Name</label>
-                      <input
-                        name="lastName"
-                        type="text"
-                        className="form-control"
-                        value={this.state.lastName}
-                        onChange={this.handleChange}
-                      ></input>
-                    </div>
-                    <div className="form-group">
-                      <label for="email">Email</label>
-                      <input
-                        name="email"
-                        type="email"
-                        className="form-control"
-                        value={this.state.email}
-                        onChange={this.handleChange}
-                      ></input>
-                    </div>
-                    <div className="form-group">
-                      <label for="bio">Bio</label>
-                      <textarea
-                        className="form-control"
-                        name="bio"
-                        value={this.state.bio}
-                        onChange={this.handleChange}
-                      ></textarea>
-                    </div>
-                    <center>
-                      <Button
-                        onClick={this.onSaveProfile.bind(this, this.state.id)}
-                        variant="primary"
-                      >
-                        Save Changes
-                      </Button>
-                      &nbsp;
-                      <Link to="/admin">
-                        <Button variant="secondary">Cancel</Button>
-                      </Link>
-                    </center>
-                  </form>
-                </div>
+              {/* <h4>Edit Profile</h4> */}
+
+              <div className="card-body">
+                <form>
+                  <div className="form-group">
+                    <label for="name">First Name</label>
+                    <input
+                      name="firstName"
+                      type="text"
+                      className="form-control"
+                      value={this.state.firstName}
+                      onChange={this.handleChange}
+                    ></input>
+                  </div>
+                  <div className="form-group">
+                    <label for="name">Last Name</label>
+                    <input
+                      name="lastName"
+                      type="text"
+                      className="form-control"
+                      value={this.state.lastName}
+                      onChange={this.handleChange}
+                    ></input>
+                  </div>
+                  <div className="form-group">
+                    <label for="email">Email</label>
+                    <input
+                      name="email"
+                      type="email"
+                      className="form-control"
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                    ></input>
+                  </div>
+                  <div className="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea
+                      className="form-control"
+                      name="bio"
+                      value={this.state.bio}
+                      onChange={this.handleChange}
+                    ></textarea>
+                  </div>
+                  <center>
+                    <Button
+                      onClick={this.onSaveProfile.bind(this, this.state.id)}
+                      variant="primary"
+                    >
+                      Save Changes
+                    </Button>
+                    &nbsp;
+                    <Link to="/admin">
+                      <Button variant="secondary">Cancel</Button>
+                    </Link>
+                  </center>
+                </form>
               </div>
             </div>
           </div>

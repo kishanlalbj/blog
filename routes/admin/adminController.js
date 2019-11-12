@@ -10,6 +10,20 @@ const getDashboardDetails = (successCB, errorCB) => {
     });
 };
 
+const getArticlesCount = (successCB, errorCB) => {
+  Article.find()
+    .count()
+    .then(count => {
+      console.log(count);
+      successCB(count);
+    })
+    .catch(err => {
+      console.log(err);
+      errorCB(err);
+    });
+};
+
 module.exports = {
-  getDashboardDetails
+  getDashboardDetails,
+  getArticlesCount
 };

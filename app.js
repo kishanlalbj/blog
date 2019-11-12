@@ -8,6 +8,7 @@ var cors = require("cors");
 const postRouter = require("./routes/articles/articleRouter");
 const authRouter = require("./auth/auth");
 const profileRouter = require("./routes/profiles/profileRouter");
+const adminRouter = require("./routes/admin/adminRouter");
 
 const app = express();
 
@@ -22,8 +23,6 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, "client/build")));
-// app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -38,9 +37,14 @@ app.use(function(req, res, next) {
   next();
 });
 
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+// });
+
 require("./auth/passport")(passport);
 
 app.use("/api/articles/", postRouter);
+app.use("/api/admin/", adminRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/auth/", authRouter);
 module.exports = app;
