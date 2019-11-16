@@ -28,7 +28,7 @@ class About extends Component {
   render() {
     return (
       <div>
-        <Hero isAbout={true} />
+        <Hero isAbout={true} isEdit={true} />
         <div className="container">
           <div className="row">
             <div
