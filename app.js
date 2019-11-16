@@ -9,10 +9,10 @@ const postRouter = require("./routes/articles/articleRouter");
 const authRouter = require("./auth/auth");
 const profileRouter = require("./routes/profiles/profileRouter");
 const adminRouter = require("./routes/admin/adminRouter");
-
+require("dotenv").config();
 const app = express();
 
-mongoose.connect("mongodb://localhost:27017/blog", {
+mongoose.connect(process.env.MONGO_URL || "mongodb://localhost:27017/blog", {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true

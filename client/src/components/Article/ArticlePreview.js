@@ -28,7 +28,8 @@ class ArticlePreview extends Component {
           </Link>
           <p className="post-meta">
             Posted by &nbsp;
-            <a href="#">{this.props.user}</a>&nbsp; on {this.props.createdOn}{" "}
+            <Link to="/about">{this.props.user}</Link>&nbsp; on{" "}
+            {this.props.createdOn}{" "}
           </p>
         </div>
         <hr></hr>

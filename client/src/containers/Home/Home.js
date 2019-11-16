@@ -9,13 +9,13 @@ class Home extends Component {
   state = {
     articles: [],
     page: 1,
-    limit: 1,
+    limit: 3,
     pagination: {}
   };
 
   getArticles = page => {
     axios
-      .get(`/api/articles?page=${page}&limit=1`)
+      .get(`/api/articles?page=${page}&limit=${this.state.limit}`)
       // .then(response => response.json())
       .then(response => {
         console.log(response.data);
@@ -62,38 +62,48 @@ class Home extends Component {
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-md-10 mx-auto">
-              {articles.map((article, index) => {
-                return (
-                  <ArticlePreview
-                    onClick={() => this.openArticle(article._id)}
-                    key={article._id}
-                    articleId={article._id}
-                    articleTitle={article.articleTitle}
-                    articleSubtitle={article.articleSubtitle}
-                    articleCategory={article.articleCategory}
-                    user={article.author}
-                    views={article.visits}
-                    createdOn={moment(article.createdOn).format("LL")}
-                  />
-                );
-              })}
+              {articles.length === 0 ? (
+                <center>
+                  <p>No articles found</p>
+                </center>
+              ) : (
+                articles.map((article, index) => {
+                  return (
+                    <ArticlePreview
+                      onClick={() => this.openArticle(article._id)}
+                      key={article._id}
+                      articleId={article._id}
+                      articleTitle={article.articleTitle}
+                      articleSubtitle={article.articleSubtitle}
+                      articleCategory={article.articleCategory}
+                      user={article.author}
+                      views={article.visits}
+                      createdOn={moment(article.createdOn).format("LL")}
+                    />
+                  );
+                })
+              )}
 
               <div className="">
                 {this.state.pagination.previous !== undefined ? (
                   <Button
                     className="btn btn-primary float-left"
+                    style={{ borderRadius: "2222000px" }}
                     onClick={this.previous}
                   >
-                    &larr; Newer Posts
+                    <i className="fa fa-arrow-left"></i>
+                    {/* &larr; */}
                   </Button>
                 ) : null}
 
                 {this.state.pagination.next !== undefined ? (
                   <Button
                     className="btn btn-primary float-right"
+                    style={{ borderRadius: "122000px" }}
                     onClick={this.next}
                   >
-                    Older Posts &rarr;
+                    <i className="fa fa-arrow-right"></i>
+                    {/* &rarr; */}
                   </Button>
                 ) : null}
               </div>

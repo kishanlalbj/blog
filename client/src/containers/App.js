@@ -13,6 +13,7 @@ import About from "./About/About";
 import Admin from "./Admin/Admin";
 import Article from "./Article/Article";
 import ArticleBuilder from "./ArticleBuilder/ArticleBuilder";
+import EditArticle from "./Admin/EditArticle";
 import Profile from "./Profile/Profile";
 
 if (localStorage.jwtToken) {
@@ -44,6 +45,7 @@ function App() {
             <Route exact path="/about" component={About} />
             <Route exact path="/admin" component={Admin} />
             <Route exact path="/article/:id" component={Article} />
+            <Route exact path="/edit/:id" component={EditArticle} />
             <Route exact path="/add" component={ArticleBuilder} />
           </Switch>
           <Footer />

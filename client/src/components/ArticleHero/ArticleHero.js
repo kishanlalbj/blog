@@ -1,16 +1,21 @@
 import React, { Component } from "react";
 import "./ArticleHero.css";
+import { Link } from "react-router-dom";
 import moment from "moment";
+import Life from "../../assets/img/life.jpg";
 
 class ArticleHero extends Component {
+  state = {
+    background: ""
+  };
+
   render() {
     return (
       <div>
         <header
           className="masthead"
           style={{
-            background:
-              'url("https://wallup.net/wp-content/uploads/2017/03/28/270544-city-cityscape-Rio_de_Janeiro-Brazil-clouds-hill-sea-sunset-748x421.jpg")',
+            background: `url(${Life})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             height: "100vh"
@@ -25,7 +30,7 @@ class ArticleHero extends Component {
                   <h2 className="subheading">{this.props.articleSubtitle}</h2>
                   <span className="meta">
                     Posted by &nbsp;
-                    <a href="#">{this.props.author}</a> &nbsp; on{" "}
+                    <Link to="/about">{this.props.author}</Link> &nbsp; on{" "}
                     {moment(this.props.createdOn).format("LL")}
                   </span>
                 </div>

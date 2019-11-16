@@ -19,6 +19,7 @@ export const loginUser = (userData, history) => dispatch => {
       setAuthHeader(token);
       //Decode token to get user data
       const decoded = jwt_decode(token);
+      console.log(decoded);
       //Set Current User
       dispatch(setCurrentUser(decoded));
       history.push("/admin");
@@ -39,7 +40,8 @@ export const logoutUser = history => dispatch => {
   localStorage.removeItem("jwtToken");
   console.log("TOKEN REMOVED ", localStorage.getItem("jwtToken"));
   setAuthHeader(false);
-  history.push("/");
+  // history.push("/");
+  window.location.href = "/";
 
   dispatch({
     type: LOGOUT_USER,

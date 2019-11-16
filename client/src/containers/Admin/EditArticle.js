@@ -3,11 +3,11 @@ import { Container, Form, Row, Col, Button, Modal } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import axios from "axios";
 
-class ArticleBuilder extends Component {
+class EditArticle extends Component {
   state = {
     articleTitle: "",
-    articleSubtitle: "",
     articleCategories: [
       "Life",
       "Travel",
@@ -16,19 +16,38 @@ class ArticleBuilder extends Component {
       "Life Style",
       "Retro"
     ],
-    articleCategory: "",
-    articleCover: "",
     articleContent: "",
-    author: "",
-    show: false,
-    message: ""
+    articleSubtitle: "",
+    articleCategory: "",
+    modal: false
   };
 
-  componentDidMount() {
-    if (!this.props.auth.isAuthenticated) {
-      this.props.history.push("/");
-    }
-  }
+  saveChanges = () => {
+    let obj = {
+      articleTitle: this.state.articleTitle,
+      articleSubtitle: this.state.articleSubtitle,
+      articleContent: this.state.articleContent,
+      articleCategory: this.state.articleCategory,
+      id: this.props.match.params.id
+    };
+
+    console.log(obj);
+
+    axios
+      .post("/api/articles/update", obj)
+      .then(response => {
+        console.log(response.data);
+        this.toggleModal();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  toggleModal = () => {
+    let copy = this.state.modal;
+    this.setState({ modal: !copy });
+  };
 
   handleChange = e => {
     console.log(e.target.name, e.target.value);
@@ -39,76 +58,35 @@ class ArticleBuilder extends Component {
     this.setState({ articleContent: value });
   };
 
-  toggleModal = () => {
-    let copy = this.state.show;
-    this.setState({ show: !copy });
-  };
-
-  closeModal = () => {
-    this.setState({
-      show: false
-    });
-
-    this.props.history.push("/admin");
-  };
-
-  postArticle = () => {
-    const {
-      articleTitle,
-      articleSubtitle,
-      articleContent,
-      author,
-      articleCategory,
-      articleCategories
-    } = this.state;
-
-    let newArticle = {
-      articleTitle,
-      articleSubtitle,
-      articleCategory,
-      articleContent,
-      author: this.props.auth.user.name
-    };
-    console.log(this.props.auth);
-    console.log(newArticle);
-
-    fetch("/api/articles/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(newArticle)
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState({ message: "Article Created Successfully" });
-        this.toggleModal();
+  componentDidMount() {
+    axios
+      .get("/api/articles/" + this.props.match.params.id)
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          articleTitle: response.data.articleTitle,
+          articleSubtitle: response.data.articleSubtitle,
+          articleContent: response.data.articleContent,
+          articleCategory: response.data.articleCategory
+        });
       })
       .catch(err => {
-        this.setState({ message: "Sorry. Your article cannot be posted" });
         console.log(err);
       });
-  };
+  }
 
   render() {
-    const {
-      articleTitle,
-      articleSubtitle,
-      articleContent,
-      author,
-      articleCategory,
-      articleCategories
-    } = this.state;
     return (
       <div>
         <div
           className="overlay"
           style={{ backgroundColor: "black", height: "10vh" }}
         ></div>
-
         <Container style={{ marginTop: "10px" }}>
-          <h2>New Article</h2>
+          <center>
+            <h2>Edit Article</h2>
+          </center>
+
           <Form>
             <Form.Row>
               <Col>
@@ -167,10 +145,9 @@ class ArticleBuilder extends Component {
               </Col>
             </Form.Row>
           </Form>
-
           <center style={{ clear: "both", marginTop: "50px" }}>
-            <Button variant="primary" value="Create" onClick={this.postArticle}>
-              Create
+            <Button variant="primary" value="Create" onClick={this.saveChanges}>
+              Save Changes
             </Button>
             &nbsp;
             <Link to="/admin">
@@ -184,12 +161,12 @@ class ArticleBuilder extends Component {
         <br></br>
         <hr></hr>
 
-        <Modal show={this.state.show} onHide={this.toggleModal}>
+        <Modal show={this.state.modal} onHide={this.toggleModal}>
           <Modal.Header closeButton>Message</Modal.Header>
 
-          <Modal.Body>{this.state.message}</Modal.Body>
+          <Modal.Body>Article updated successfully</Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.closeModal}>Close</Button>
+            <Button onClick={this.toggleModal}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -203,4 +180,4 @@ const mapStateToProp = state => ({
   err: state.err
 });
 
-export default connect(mapStateToProp)(withRouter(ArticleBuilder));
+export default connect(mapStateToProp)(withRouter(EditArticle));

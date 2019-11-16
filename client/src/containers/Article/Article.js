@@ -35,6 +35,7 @@ export default class Article extends Component {
           articleSubtitle={article.articleSubtitle}
           author={article.author}
           createdOn={article.createdOn}
+          articleCategory={article.articleCategory}
         />
         <div className="container">
           <div className="row">

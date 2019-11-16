@@ -80,6 +80,9 @@ class Navbar extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  componentDidMount() {
+    console.log(this.props.auth);
+  }
   render() {
     return (
       <div>
@@ -88,9 +91,9 @@ class Navbar extends Component {
           id="mainNav"
         >
           <div className="container">
-            <a className="navbar-brand" href="index.html">
+            <Link to="/" className="navbar-brand">
               Scribbles
-            </a>
+            </Link>
             <button
               className="navbar-toggler navbar-toggler-right"
               type="button"

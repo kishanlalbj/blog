@@ -1,14 +1,16 @@
 const Article = require("../../models/Article");
 
 const getArticles = (successCB, errorCB) => {
-  Article.find().then(
-    articles => {
-      successCB(articles);
-    },
-    err => {
-      errorCB(err);
-    }
-  );
+  Article.find()
+    .sort({ createdOn: -1 })
+    .then(
+      articles => {
+        successCB(articles);
+      },
+      err => {
+        errorCB(err);
+      }
+    );
 };
 
 const getArticle = (id, successCB, errorCB) => {
@@ -35,7 +37,7 @@ const addArticle = (article, successCB, errorCB) => {
 };
 
 const deleteArticle = (articleId, successCB, errorCB) => {
-  Expense.deleteOne({ _id: articleId })
+  Article.deleteOne({ _id: articleId })
     .then(article => {
       console.log("Deleted One", article);
       successCB(article);
@@ -45,8 +47,9 @@ const deleteArticle = (articleId, successCB, errorCB) => {
     });
 };
 
-const updateArticle = (articleId, successCB, errorCB) => {
-  Expense.updateOne({ id: articleId })
+const updateArticle = (article, successCB, errorCB) => {
+  console.log(article);
+  Article.updateOne({ _id: article.id }, { $set: article }, { new: true })
     .then(article => {
       successCB(article);
     })

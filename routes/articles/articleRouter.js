@@ -70,7 +70,7 @@ router.post("/add", (req, res) => {
   }
 });
 
-router.delete("/delete", (req, res) => {
+router.post("/delete", (req, res) => {
   console.log(req.body);
   try {
     articleController.deleteArticle(
@@ -88,10 +88,10 @@ router.delete("/delete", (req, res) => {
   }
 });
 
-router.patch("/update", (req, res) => {
+router.post("/update", (req, res) => {
   try {
     articleController.updateArticle(
-      req.body.id,
+      req.body,
       article => {
         res.send(article);
       },
@@ -100,6 +100,7 @@ router.patch("/update", (req, res) => {
       }
     );
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 });

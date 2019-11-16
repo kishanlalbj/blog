@@ -152,15 +152,13 @@ img::-moz-selection {
   }
 }
 
-@media only screen and (min-width: 992px) {
+/* @media only screen and (min-width: 992px) {
   #mainNav {
     transition: background-color 0.2s;
-    /* Force Hardware Acceleration in WebKit */
     transform: translate3d(0, 0, 0);
     -webkit-backface-visibility: hidden;
   }
   #mainNav.is-fixed {
-    /* when the user scrolls down, we hide the header right above the viewport */
     position: fixed;
     top: -67px;
     transition: transform 0.2s;
@@ -182,10 +180,9 @@ img::-moz-selection {
     color: #0085a1;
   }
   #mainNav.is-visible {
-    /* if the user changes the scrolling direction, we show the header */
     transform: translate3d(0, 100%, 0);
   }
-}
+} */
 
 header.masthead {
   margin-bottom: 50px;
@@ -432,4 +429,39 @@ footer .copyright {
 .btn-lg {
   font-size: 16px;
   padding: 25px 35px;
+}
+
+.btn-circle {
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.btn-circle i {
+  position: relative;
+  top: -1px;
+}
+
+.btn-circle-sm {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 0.9rem;
+}
+
+.btn-circle-lg {
+  width: 55px;
+  height: 55px;
+  line-height: 55px;
+  font-size: 1.1rem;
+}
+
+.btn-circle-xl {
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  font-size: 1.3rem;
 }
