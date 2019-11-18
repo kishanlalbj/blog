@@ -11,12 +11,20 @@ const profileRouter = require("./routes/profiles/profileRouter");
 const adminRouter = require("./routes/admin/adminRouter");
 require("dotenv").config();
 const app = express();
+console.log(process.env.NODE_ENV, process.env.MONGODB_URL);
 
-mongoose.connect(process.env.MONGO_URL || "mongodb://localhost:27017/blog", {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-});
+mongoose
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+  })
+  .then(response => {
+    console.log("MongoDB Connected");
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 app.use(cors());
 app.use(logger("dev"));
@@ -36,6 +44,13 @@ app.use(function(req, res, next) {
   );
   next();
 });
+
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "client", "build")));
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "build", "index.html"));
+//   });
+// }
 
 // app.get("*", (req, res) => {
 //   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
