@@ -150,7 +150,7 @@ class Admin extends Component {
             </div>
           </div>
           <br></br>
-          <div style={{ clear: "both" }}>
+          <div style={{ clear: "both", marginTop: "50px" }}>
             {/* <InputGroup className="mb-3" style={{ borderRadius: "0px" }}>
               <FormControl
                 placeholder="Search Articles"

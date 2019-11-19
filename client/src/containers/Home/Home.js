@@ -110,7 +110,7 @@ class Home extends Component {
             </div>
           </div>
         </div>
-        <hr></hr>
+        {/* <hr></hr> */}
       </div>
     );
   }

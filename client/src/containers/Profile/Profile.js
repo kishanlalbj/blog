@@ -142,11 +142,12 @@ class Profile extends Component {
                 className="d-block img-fluid mb-3"
               />
 
-              <input type="file" onChange={this.uploadImage} />
+              <input type="file" onChange={this.uploadImage} disabled />
               <br></br>
               <br></br>
 
               <button
+                disabled
                 onClick={this.updateImage}
                 style={{ width: "66%" }}
                 className="btn btn-danger"

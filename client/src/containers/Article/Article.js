@@ -47,7 +47,7 @@ export default class Article extends Component {
           </div>
         </div>
 
-        <hr></hr>
+        {/* <hr></hr> */}
       </div>
     );
   }
