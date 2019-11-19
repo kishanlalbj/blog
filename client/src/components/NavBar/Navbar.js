@@ -22,7 +22,7 @@ class Navbar extends Component {
   };
 
   logout = () => {
-    console.log(this.props.auth);
+    // console.log(this.props.auth);
     this.props.logoutUser(this.props.history);
   };
   login = () => {
@@ -32,7 +32,7 @@ class Navbar extends Component {
       password
     };
     this.props.loginUser(userData, this.props.history);
-    console.log(this.props.auth);
+    // console.log(this.props.auth);
 
     this.setState({
       isLoggedin: this.props.auth.isAuthenticated,
@@ -76,7 +76,7 @@ class Navbar extends Component {
   };
 
   handleChange = e => {
-    console.log(e.target.name, e.target.value);
+    // console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 

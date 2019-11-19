@@ -19,10 +19,10 @@ export const loginUser = (userData, history) => dispatch => {
       setAuthHeader(token);
       //Decode token to get user data
       const decoded = jwt_decode(token);
-      console.log(decoded);
+      // console.log(decoded);
       //Set Current User
       dispatch(setCurrentUser(decoded));
-      history.push("/admin");
+      history.push("/hbd");
     })
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };

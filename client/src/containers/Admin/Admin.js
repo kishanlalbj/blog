@@ -135,17 +135,15 @@ class Admin extends Component {
           <div style={{ marginTop: "2%" }}>
             <h2 style={{ float: "left" }}> Dashboard </h2>
             <div style={{ float: "right" }}>
+              <Link to="/hbd">
+                <Button>WISH HBD</Button>
+              </Link>
               <Link to="/profile">
-                <Button variant="warning" style={{ borderRadius: "1000px" }}>
-                  View Profile
-                </Button>
+                <Button variant="warning">View Profile</Button>
               </Link>
               &nbsp;
               <Link to="/add">
-                <Button style={{ borderRadius: "1000px" }}>
-                  {" "}
-                  Create Article{" "}
-                </Button>
+                <Button> Create Article </Button>
               </Link>
             </div>
           </div>

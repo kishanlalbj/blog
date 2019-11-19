@@ -18,7 +18,7 @@ class Home extends Component {
       .get(`/api/articles?page=${page}&limit=${this.state.limit}`)
       // .then(response => response.json())
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
 
         if (response.data.results.length === 0) {
           this.setState({
@@ -110,6 +110,7 @@ class Home extends Component {
             </div>
           </div>
         </div>
+        <br></br>
         {/* <hr></hr> */}
       </div>
     );

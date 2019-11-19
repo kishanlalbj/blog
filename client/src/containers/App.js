@@ -15,6 +15,7 @@ import Article from "./Article/Article";
 import ArticleBuilder from "./ArticleBuilder/ArticleBuilder";
 import EditArticle from "./Admin/EditArticle";
 import Profile from "./Profile/Profile";
+import HBD from "./Admin/HBD";
 
 if (localStorage.jwtToken) {
   //set Auth Token
@@ -47,6 +48,7 @@ function App() {
             <Route exact path="/article/:id" component={Article} />
             <Route exact path="/edit/:id" component={EditArticle} />
             <Route exact path="/add" component={ArticleBuilder} />
+            <Route exact path="/hbd" component={HBD} />
           </Switch>
           <Footer />
         </Router>
