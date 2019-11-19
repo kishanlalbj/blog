@@ -9,7 +9,7 @@ const postRouter = require("./routes/articles/articleRouter");
 const authRouter = require("./auth/auth");
 const profileRouter = require("./routes/profiles/profileRouter");
 const adminRouter = require("./routes/admin/adminRouter");
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const app = express();
 console.log(process.env.NODE_ENV, process.env.MONGODB_URL);
 
