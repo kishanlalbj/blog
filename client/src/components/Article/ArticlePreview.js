@@ -23,13 +23,13 @@ class ArticlePreview extends Component {
             <span style={{ display: "inline" }}>
               <Badge variant="info">{this.props.articleCategory}</Badge>
               &nbsp;
-              {/* <Badge variant="info">{this.props.views} views</Badge> */}
+              {/* <Badge variant="info">{this.props.likes} Likes</Badge> */}
             </span>
           </Link>
           <p className="post-meta">
             Posted by &nbsp;
             <Link to="/about">{this.props.user}</Link>&nbsp; on{" "}
-            {this.props.createdOn}{" "}
+            {this.props.createdOn} &nbsp; {this.props.comments} Comments
           </p>
         </div>
         <hr></hr>

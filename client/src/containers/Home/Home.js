@@ -67,7 +67,7 @@ class Home extends Component {
                   <p>No articles found</p>
                 </center>
               ) : (
-                articles.map((article, index) => {
+                articles.map(article => {
                   return (
                     <ArticlePreview
                       onClick={() => this.openArticle(article._id)}
@@ -77,7 +77,8 @@ class Home extends Component {
                       articleSubtitle={article.articleSubtitle}
                       articleCategory={article.articleCategory}
                       user={article.author}
-                      views={article.visits}
+                      likes={article.likes}
+                      comments={article.comments.length}
                       createdOn={moment(article.createdOn).format("LL")}
                     />
                   );

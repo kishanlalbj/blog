@@ -12,7 +12,7 @@ const getDashboardDetails = (successCB, errorCB) => {
 
 const getArticlesCount = (successCB, errorCB) => {
   Article.find()
-    .count()
+    .countDocuments()
     .then(count => {
       console.log(count);
       successCB(count);

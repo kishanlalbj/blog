@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   render() {
@@ -29,6 +30,8 @@ class Login extends Component {
             <Button variant="primary" onClick={this.props.onLogin}>
               Login
             </Button>
+            &nbsp;
+            <Link to="#">Forgot Password ?</Link>
           </center>
         </Form>
       </div>

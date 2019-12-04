@@ -24,6 +24,28 @@ const getArticle = (id, successCB, errorCB) => {
     });
 };
 
+const postComment = (comment, successCB, errorCB) => {
+  console.log(comment);
+  Article.findOneAndUpdate(
+    { _id: comment.id },
+    {
+      $push: {
+        comments: {
+          commenterName: comment.commenterName,
+          commentText: comment.commentText
+        }
+      }
+    }
+  )
+    .then(response => {
+      console.log(response);
+      successCB(comment);
+    })
+    .catch(err => {
+      errorCB(err);
+    });
+};
+
 const addArticle = (article, successCB, errorCB) => {
   console.log(JSON.stringify(article, undefined, 2));
   let newarticle = new Article(article);
@@ -63,5 +85,6 @@ module.exports = {
   addArticle,
   deleteArticle,
   updateArticle,
+  postComment,
   getArticle
 };

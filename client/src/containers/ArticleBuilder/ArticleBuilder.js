@@ -14,7 +14,10 @@ class ArticleBuilder extends Component {
       "Romance",
       "Random Thoughts",
       "Life Style",
-      "Retro"
+      "Retro",
+      "Family",
+      "Nature",
+      "Fashion"
     ],
     articleCategory: "",
     articleCover: "",

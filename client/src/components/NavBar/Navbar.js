@@ -76,7 +76,6 @@ class Navbar extends Component {
   };
 
   handleChange = e => {
-    // console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -99,9 +98,6 @@ class Navbar extends Component {
               type="button"
               data-toggle="collapse"
               data-target="#navbarResponsive"
-              aria-controls="navbarResponsive"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
             >
               Menu
               <i className="fas fa-bars"></i>
@@ -128,10 +124,10 @@ class Navbar extends Component {
                     </li>
                     <li className="nav-item">
                       <Button
-                        className="nav-link"
+                        // className="nav-link"
                         style={{
-                          color: "white",
-                          backgroundColor: "transparent",
+                          color: "black",
+                          backgroundColor: "white",
                           borderColor: "white"
                         }}
                         onClick={this.logout}
@@ -143,10 +139,10 @@ class Navbar extends Component {
                 ) : (
                   <li className="nav-item">
                     <Button
-                      className="nav-link"
+                      // className="nav-link"
                       style={{
-                        color: "white",
-                        backgroundColor: "transparent",
+                        color: "black",
+                        backgroundColor: "white",
                         borderColor: "white"
                       }}
                       onClick={this.toggleLogin}

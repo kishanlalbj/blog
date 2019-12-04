@@ -9,7 +9,12 @@ class ArticleHero extends Component {
     background: ""
   };
 
+  // giveLike = () => {
+  //   this.props.giveLike(!this.state.isLiked);
+  // };
+
   render() {
+    console.log(this.props.comments);
     return (
       <div>
         <header
@@ -27,11 +32,18 @@ class ArticleHero extends Component {
               <div className="col-lg-8 col-md-10 mx-auto">
                 <div className="post-heading">
                   <h1>{this.props.articleTitle}</h1>
-                  <h2 className="subheading">{this.props.articleSubtitle}</h2>
+                  <h2 className="subheading">
+                    {this.props.articleSubtitle}
+                  </h2>{" "}
                   <span className="meta">
                     Posted by &nbsp;
-                    <Link to="/about">{this.props.author}</Link> &nbsp; on{" "}
-                    {moment(this.props.createdOn).format("LL")}
+                    <Link to="/about">{this.props.author}</Link>
+                    &nbsp; on {moment(this.props.createdOn).format(
+                      "LL"
+                    )} &nbsp; {this.props.comments.length} Comments
+                    {/* <Link>
+                      <i className="fa fa-heart" onClick={this.giveLike} />
+                    </Link> */}
                   </span>
                 </div>
               </div>

@@ -30,34 +30,26 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  // likes: [
-  //   {
-  //     user: {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "users"
-  //     }
-  //   }
-  // ],
-  // comments: [
-  //   {
-  //     user: {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "users"
-  //     },
-  //     commenterName: {
-  //       type: String,
-  //       required: true
-  //     },
-  //     commentText: {
-  //       type: String,
-  //       required: true
-  //     },
-  //     createdOn: {
-  //       type: String,
-  //       required: true
-  //     }
-  //   }
-  // ],
+  likes: {
+    type: Number,
+    default: 0
+  },
+  comments: [
+    {
+      commenterName: {
+        type: String,
+        required: true
+      },
+      commentText: {
+        type: String,
+        required: true
+      },
+      createdOn: {
+        type: Date,
+        default: Date.now()
+      }
+    }
+  ],
   visits: {
     type: Number,
     default: 0

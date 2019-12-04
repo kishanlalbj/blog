@@ -16,6 +16,7 @@ import ArticleBuilder from "./ArticleBuilder/ArticleBuilder";
 import EditArticle from "./Admin/EditArticle";
 import Profile from "./Profile/Profile";
 import HBD from "./Admin/HBD";
+import ResetPassword from "../components/Login/ResetPassword";
 
 if (localStorage.jwtToken) {
   //set Auth Token
@@ -49,6 +50,7 @@ function App() {
             <Route exact path="/edit/:id" component={EditArticle} />
             <Route exact path="/add" component={ArticleBuilder} />
             <Route exact path="/hbd" component={HBD} />
+            <Route exact path="/resetpassword" component={ResetPassword} />
           </Switch>
           <Footer />
         </Router>

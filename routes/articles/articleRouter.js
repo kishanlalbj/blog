@@ -55,6 +55,7 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
+  console.log("USER IDDDDDDDDDDDDDDDd");
   try {
     articleController.addArticle(
       req.body,
@@ -94,6 +95,25 @@ router.post("/update", (req, res) => {
       req.body,
       article => {
         res.send(article);
+      },
+      error => {
+        throw error;
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
+router.post("/comment", (req, res) => {
+  console.log(req.body);
+  try {
+    articleController.postComment(
+      req.body,
+      response => {
+        console.log(response);
+        res.send(response);
       },
       error => {
         throw error;
