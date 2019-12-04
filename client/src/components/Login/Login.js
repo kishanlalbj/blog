@@ -30,8 +30,8 @@ class Login extends Component {
             <Button variant="primary" onClick={this.props.onLogin}>
               Login
             </Button>
-            &nbsp;
-            <Link to="#">Forgot Password ?</Link>
+            {/* &nbsp; */}
+            {/* <Link to="#">Forgot Password ?</Link> */}
           </center>
         </Form>
       </div>

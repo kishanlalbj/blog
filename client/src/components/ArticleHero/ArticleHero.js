@@ -38,9 +38,9 @@ class ArticleHero extends Component {
                   <span className="meta">
                     Posted by &nbsp;
                     <Link to="/about">{this.props.author}</Link>
-                    &nbsp; on {moment(this.props.createdOn).format(
-                      "LL"
-                    )} &nbsp; {this.props.comments.length} Comments
+                    &nbsp; on {moment(this.props.createdOn).format("LL")} &nbsp;
+                    *<strong> {this.props.articleCategory} </strong>* &nbsp;{" "}
+                    {this.props.comments.length} Comments
                     {/* <Link>
                       <i className="fa fa-heart" onClick={this.giveLike} />
                     </Link> */}
