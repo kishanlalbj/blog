@@ -34,7 +34,7 @@ class ArticleBuilder extends Component {
   }
 
   handleChange = e => {
-    console.log(e.target.name, e.target.value);
+    // console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -72,8 +72,8 @@ class ArticleBuilder extends Component {
       articleContent,
       author: this.props.auth.user.name
     };
-    console.log(this.props.auth);
-    console.log(newArticle);
+    // console.log(this.props.auth);
+    // console.log(newArticle);
 
     fetch("/api/articles/add", {
       method: "POST",
@@ -84,7 +84,7 @@ class ArticleBuilder extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         this.setState({ message: "Article Created Successfully" });
         this.toggleModal();
       })

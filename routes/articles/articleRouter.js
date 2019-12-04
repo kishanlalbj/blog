@@ -39,7 +39,7 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   try {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     articleController.getArticle(
       req.params.id,
       article => {
@@ -55,7 +55,7 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
-  console.log("USER IDDDDDDDDDDDDDDDd");
+  // console.log("USER IDDDDDDDDDDDDDDDd");
   try {
     articleController.addArticle(
       req.body,
@@ -72,12 +72,12 @@ router.post("/add", (req, res) => {
 });
 
 router.post("/delete", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     articleController.deleteArticle(
       req.body.id,
       article => {
-        console.log("DELETED", article);
+        // console.log("DELETED", article);
         res.send(article);
       },
       error => {
@@ -107,12 +107,12 @@ router.post("/update", (req, res) => {
 });
 
 router.post("/comment", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     articleController.postComment(
       req.body,
       response => {
-        console.log(response);
+        // console.log(response);
         res.send(response);
       },
       error => {

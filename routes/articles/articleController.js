@@ -16,7 +16,7 @@ const getArticles = (successCB, errorCB) => {
 const getArticle = (id, successCB, errorCB) => {
   Article.findById({ _id: id })
     .then(article => {
-      console.log(JSON.stringify(article, undefined, 2));
+      // console.log(JSON.stringify(article, undefined, 2));
       successCB(article);
     })
     .catch(err => {
@@ -25,7 +25,7 @@ const getArticle = (id, successCB, errorCB) => {
 };
 
 const postComment = (comment, successCB, errorCB) => {
-  console.log(comment);
+  // console.log(comment);
   Article.findOneAndUpdate(
     { _id: comment.id },
     {
@@ -38,7 +38,7 @@ const postComment = (comment, successCB, errorCB) => {
     }
   )
     .then(response => {
-      console.log(response);
+      // console.log(response);
       successCB(comment);
     })
     .catch(err => {
@@ -47,7 +47,7 @@ const postComment = (comment, successCB, errorCB) => {
 };
 
 const addArticle = (article, successCB, errorCB) => {
-  console.log(JSON.stringify(article, undefined, 2));
+  // console.log(JSON.stringify(article, undefined, 2));
   let newarticle = new Article(article);
 
   newarticle
@@ -61,7 +61,7 @@ const addArticle = (article, successCB, errorCB) => {
 const deleteArticle = (articleId, successCB, errorCB) => {
   Article.deleteOne({ _id: articleId })
     .then(article => {
-      console.log("Deleted One", article);
+      // console.log("Deleted One", article);
       successCB(article);
     })
     .catch(err => {
@@ -70,7 +70,7 @@ const deleteArticle = (articleId, successCB, errorCB) => {
 };
 
 const updateArticle = (article, successCB, errorCB) => {
-  console.log(article);
+  // console.log(article);
   Article.updateOne({ _id: article.id }, { $set: article }, { new: true })
     .then(article => {
       successCB(article);

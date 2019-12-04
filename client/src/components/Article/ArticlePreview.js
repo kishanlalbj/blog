@@ -4,7 +4,7 @@ import { Badge } from "react-bootstrap";
 
 class ArticlePreview extends Component {
   redirectToArticle = id => {
-    console.log(id);
+    // console.log(id);
     this.props.history.push({ pathname: `/article/${id}` });
   };
 

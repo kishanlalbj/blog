@@ -45,7 +45,7 @@ router.post("/login", (req, res) => {
       if (!user) {
         return res.status(400).json({ message: "Email is not registered" });
       }
-      console.log(req.body.password);
+      console.log("TEST", req.body.password);
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
         if (err) throw err;
         if (isMatch) {

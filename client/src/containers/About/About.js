@@ -13,7 +13,7 @@ class About extends Component {
     fetch("/api/profile")
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         this.setState({
           firstName: data[0].firstName,
           lastName: data[0].lastName,

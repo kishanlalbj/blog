@@ -31,12 +31,12 @@ class EditArticle extends Component {
       id: this.props.match.params.id
     };
 
-    console.log(obj);
+    // console.log(obj);
 
     axios
       .post("/api/articles/update", obj)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.toggleModal();
       })
       .catch(err => {
@@ -50,7 +50,7 @@ class EditArticle extends Component {
   };
 
   handleChange = e => {
-    console.log(e.target.name, e.target.value);
+    // console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -62,7 +62,7 @@ class EditArticle extends Component {
     axios
       .get("/api/articles/" + this.props.match.params.id)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({
           articleTitle: response.data.articleTitle,
           articleSubtitle: response.data.articleSubtitle,

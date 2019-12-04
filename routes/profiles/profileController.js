@@ -11,14 +11,14 @@ const getProfile = (successCB, errorCB) => {
 };
 
 const updateProfile = (profile, successCB, errorCB) => {
-  console.log(profile);
+  // console.log(profile);
   User.findOneAndUpdate(
     { _id: profile.id },
     { $set: profile },
     { new: true, useFindAndModify: false }
   )
     .then(response => {
-      console.log(response);
+      // console.log(response);
       successCB(response);
     })
     .catch(err => {

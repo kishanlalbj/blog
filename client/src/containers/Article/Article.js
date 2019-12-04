@@ -15,7 +15,7 @@ export default class Article extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.match.params.id);
+    // console.log(this.props.match.params.id);
     window.scrollTo(0, 0);
 
     fetch("/api/articles/" + this.props.match.params.id)
@@ -24,7 +24,7 @@ export default class Article extends Component {
         let copyArticle = { ...this.state.article };
         copyArticle = data;
         this.setState({ article: copyArticle, comments: data.comments }, () => {
-          console.log("Articles", this.state.article);
+          // console.log("Articles", this.state.article);
         });
       })
       .catch(err => {
@@ -37,7 +37,7 @@ export default class Article extends Component {
   };
 
   postComment = (comment, name) => {
-    console.log("Posting Comment");
+    // console.log("Posting Comment");
     let obj = {
       id: this.props.match.params.id,
       commenterName: name,
@@ -57,7 +57,7 @@ export default class Article extends Component {
               message: ""
             },
             () => {
-              console.log("Articles", this.state.comments);
+              // console.log("Articles", this.state.comments);
             }
           );
         })

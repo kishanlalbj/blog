@@ -6,7 +6,7 @@ var multer = require("multer");
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    console.log(fs.existsSync(path.join(__dirname, "../../uploads")));
+    // console.log(fs.existsSync(path.join(__dirname, "../../uploads")));
     fs.exists(path.join(__dirname, "../../uploads"), exists => {
       if (!exists) fs.mkdir(path.join(__dirname, "../../uploads"));
     });
@@ -49,7 +49,7 @@ router.post("/update", (req, res) => {
     profileController.updateProfile(
       req.body,
       result => {
-        console.log("Updated REstule", result);
+        // console.log("Updated REstule", result);
         res.send(result);
       },
       err => {
@@ -65,7 +65,7 @@ router.post("/update", (req, res) => {
 
 router.post("/upload", upload.single("profile"), (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
 
     res.send(req.file);
   } catch (error) {

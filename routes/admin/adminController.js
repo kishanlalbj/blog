@@ -14,7 +14,7 @@ const getArticlesCount = (successCB, errorCB) => {
   Article.find()
     .countDocuments()
     .then(count => {
-      console.log(count);
+      // console.log(count);
       successCB(count);
     })
     .catch(err => {

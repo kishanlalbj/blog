@@ -7,7 +7,7 @@ import jwt_decode from "jwt-decode";
 // Login User
 
 export const loginUser = (userData, history) => dispatch => {
-  console.log(userData);
+  // console.log(userData);
   axios
     .post("/api/auth/login", userData)
     .then(response => {
@@ -38,7 +38,7 @@ export const setCurrentUser = decoded => {
 //logout user
 export const logoutUser = history => dispatch => {
   localStorage.removeItem("jwtToken");
-  console.log("TOKEN REMOVED ", localStorage.getItem("jwtToken"));
+  // console.log("TOKEN REMOVED ", localStorage.getItem("jwtToken"));
   setAuthHeader(false);
   // history.push("/");
   window.location.href = "/";

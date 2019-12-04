@@ -19,14 +19,14 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.auth.isAuthenticated);
+    // console.log(this.props.auth.isAuthenticated);
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     } else {
       fetch("/api/profile")
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          // console.log(data);
           this.setState({
             id: data[0]._id,
             firstName: data[0].firstName,
@@ -50,11 +50,11 @@ class Profile extends Component {
       email: this.state.email,
       bio: this.state.bio
     };
-    console.log(profile);
+    // console.log(profile);
     axios
       .post("/api/profile/update", profile)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         let copyModal = this.state.showModal;
         this.setState({
           id: response.data._id,
@@ -82,7 +82,7 @@ class Profile extends Component {
   };
 
   uploadImage = e => {
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     console.log("Image upload");
     this.setState(
       {
@@ -90,7 +90,7 @@ class Profile extends Component {
         loading: 0
       },
       () => {
-        console.log(this.state.avatar);
+        // console.log(this.state.avatar);
       }
     );
   };
@@ -106,7 +106,7 @@ class Profile extends Component {
       config: { headers: { "Content-Type": "multipart/form-data" } }
     })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({
           avatar: ""
         });
@@ -117,7 +117,7 @@ class Profile extends Component {
   };
 
   handleChange = e => {
-    console.log(e.target.name, e.target.value);
+    // console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 

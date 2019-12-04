@@ -36,7 +36,7 @@ class Admin extends Component {
       .get(`/api/articles?page=${page}&limit=10`)
       // .then(response => response.json())
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
 
         if (response.data.results.length === 0) {
           this.setState({
@@ -64,7 +64,7 @@ class Admin extends Component {
   };
 
   handleChange = e => {
-    console.log(e.target.name, e.target.value);
+    // console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -78,13 +78,13 @@ class Admin extends Component {
     axios
       .post("/api/articles/delete", { id: this.state.deleteId })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         let copy = [...this.state.articles];
         let id = this.state.deleteId;
         let newcopy = copy.filter(function(obj) {
           return obj._id !== id;
         });
-        console.log(newcopy);
+        // console.log(newcopy);
         this.setState({
           confirmModal: false,
           deleteId: "",
@@ -101,7 +101,7 @@ class Admin extends Component {
     axios
       .get("/api/admin/dashboard")
       .then(response => {
-        console.log("COUNT", response.data);
+        // console.log("COUNT", response.data);
 
         this.setState({
           totalPosts: response.data.totalArticles
@@ -113,7 +113,7 @@ class Admin extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.auth.isAuthenticated);
+    // console.log(this.props.auth.isAuthenticated);
     if (!this.props.auth.isAuthenticated) {
       console.log("Hello");
       this.props.history.push("/");

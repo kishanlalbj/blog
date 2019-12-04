@@ -5,7 +5,7 @@ router.get("/dashboard", (req, res) => {
   try {
     adminController.getArticlesCount(
       count => {
-        console.log(count);
+        // console.log(count);
         res.send({ totalArticles: count });
       },
       err => {
