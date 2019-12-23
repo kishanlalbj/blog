@@ -1,9 +1,21 @@
 import React, { Component } from "react";
 import { Container, Form, Row, Col, Button, Modal } from "react-bootstrap";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
+import quillEmoji from "quill-emoji";
+
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
+Quill.register(
+  {
+    "formats/emoji": EmojiBlot,
+    "modules/emoji-shortname": ShortNameEmoji,
+    "modules/emoji-toolbar": ToolbarEmoji,
+    "modules/emoji-textarea": TextAreaEmoji
+  },
+  true
+);
 class ArticleBuilder extends Component {
   state = {
     articleTitle: "",
@@ -95,6 +107,8 @@ class ArticleBuilder extends Component {
   };
 
   render() {
+    const emojiIcon =
+      '<svg class="i" viewBox="0 0 24 24"><use href="#emoticon-happy"></use></svg>';
     const {
       articleTitle,
       articleSubtitle,
@@ -166,6 +180,52 @@ class ArticleBuilder extends Component {
                   style={{ height: "50vh" }}
                   value={this.state.articleContent}
                   onChange={this.handleEditor}
+                  formats={[
+                    "font",
+                    "header",
+                    "bold",
+                    "italic",
+                    "underline",
+                    "strike",
+                    "blockquote",
+                    "code-block",
+                    "color",
+                    "background",
+                    "list",
+                    "indent",
+                    "align",
+                    "link",
+                    "image",
+                    "clean",
+                    "emoji"
+                  ]}
+                  modules={{
+                    toolbar: [
+                      [{ font: [] }, { header: ["Emojiss"] }],
+                      [
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strike",
+                        "blockquote",
+                        "code-block"
+                      ],
+                      [{ color: [] }, { background: [] }],
+                      [
+                        { list: "ordered" },
+                        { list: "bullet" },
+                        { indent: "-1" },
+                        { indent: "+1" }
+                      ],
+                      [{ align: [] }],
+                      ["emoji"],
+                      ["link", "image"],
+                      ["clean"]
+                    ],
+                    "emoji-toolbar": true,
+                    "emoji-textarea": true,
+                    "emoji-shortname": true
+                  }}
                 />
               </Col>
             </Form.Row>

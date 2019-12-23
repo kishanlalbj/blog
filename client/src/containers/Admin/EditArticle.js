@@ -14,7 +14,10 @@ class EditArticle extends Component {
       "Romance",
       "Random Thoughts",
       "Life Style",
-      "Retro"
+      "Retro",
+      "Family",
+      "Nature",
+      "Fashion"
     ],
     articleContent: "",
     articleSubtitle: "",
@@ -141,6 +144,52 @@ class EditArticle extends Component {
                   style={{ height: "50vh" }}
                   value={this.state.articleContent}
                   onChange={this.handleEditor}
+                  formats={[
+                    "font",
+                    "header",
+                    "bold",
+                    "italic",
+                    "underline",
+                    "strike",
+                    "blockquote",
+                    "code-block",
+                    "color",
+                    "background",
+                    "list",
+                    "indent",
+                    "align",
+                    "link",
+                    "image",
+                    "clean",
+                    "emoji"
+                  ]}
+                  modules={{
+                    toolbar: [
+                      [{ font: [] }, { header: ["Emojiss"] }],
+                      [
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strike",
+                        "blockquote",
+                        "code-block"
+                      ],
+                      [{ color: [] }, { background: [] }],
+                      [
+                        { list: "ordered" },
+                        { list: "bullet" },
+                        { indent: "-1" },
+                        { indent: "+1" }
+                      ],
+                      [{ align: [] }],
+                      ["emoji"],
+                      ["link", "image"],
+                      ["clean"]
+                    ],
+                    "emoji-toolbar": true,
+                    "emoji-textarea": true,
+                    "emoji-shortname": true
+                  }}
                 />
               </Col>
             </Form.Row>

@@ -17,6 +17,7 @@ import EditArticle from "./Admin/EditArticle";
 import Profile from "./Profile/Profile";
 import HBD from "./Admin/HBD";
 import ResetPassword from "../components/Login/ResetPassword";
+import "quill-emoji/dist/quill-emoji.css";
 
 if (localStorage.jwtToken) {
   //set Auth Token
