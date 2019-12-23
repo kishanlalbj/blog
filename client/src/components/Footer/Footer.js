@@ -45,7 +45,7 @@ export default class Footer extends Component {
                   Copyright &copy; Scribble 2019
                 </p>
                 <p className="copyright" style={{ color: "white" }}>
-                  v1.2.0
+                  v1.3.0
                 </p>
               </div>
             </div>
