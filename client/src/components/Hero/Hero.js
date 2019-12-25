@@ -41,7 +41,7 @@ export default class Hero extends Component {
                     </div>
                   ) : (
                     <>
-                      <h1>Scribbles</h1>
+                      <h1 className="main-heading">Scribbles</h1>
                       <span className="subheading">
                         Things inside my head are now here
                       </span>
