@@ -42,10 +42,10 @@ export default class Footer extends Component {
                   </li>
                 </ul>
                 <p className="copyright" style={{ color: "white" }}>
-                  Copyright &copy; Scribble 2019
+                  Copyright &copy; Scribble 2020
                 </p>
                 <p className="copyright" style={{ color: "white" }}>
-                  v1.3.0
+                  v1.3.1
                 </p>
               </div>
             </div>
