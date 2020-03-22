@@ -16,7 +16,11 @@ class HBD extends Component {
       <div>
         <div
           className="overlay"
-          style={{ backgroundColor: "black", height: "10vh" }}
+          style={{
+            background: "transparent",
+            backgroundColor: "transparent",
+            height: "10vh"
+          }}
         ></div>
         {/* <br></br> */}
         <Sound

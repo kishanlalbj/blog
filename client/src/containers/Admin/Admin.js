@@ -2,18 +2,8 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import ReactQuill from "react-quill";
 
-import {
-  Container,
-  Button,
-  Table,
-  InputGroup,
-  FormControl,
-  Modal,
-  Form,
-  Col
-} from "react-bootstrap";
+import { Container, Button, Table, Modal } from "react-bootstrap";
 import axios from "axios";
 
 class Admin extends Component {
@@ -53,6 +43,7 @@ class Admin extends Component {
         console.log(err);
       });
   }
+
   next = () => {
     let page = this.state.pagination.next.page;
     this.getArticles(page);
@@ -129,46 +120,26 @@ class Admin extends Component {
       <div>
         <div
           className="overlay"
-          style={{ backgroundColor: "black", height: "10vh" }}
+          style={{ backgroundColor: "black", height: "65px" }}
         ></div>
         <Container>
           <div style={{ marginTop: "2%" }}>
             <h2 style={{ float: "left" }}> Dashboard </h2>
             <div style={{ float: "right" }}>
-              <Link to="/hbd">
-                <Button>WISH HBD</Button>
-              </Link>
-              <Link to="/profile">
-                <Button variant="warning">View Profile</Button>
-              </Link>
               &nbsp;
               <Link to="/add">
-                <Button> Create Article </Button>
+                <Button variant="dark"> Create Article </Button>
               </Link>
             </div>
           </div>
-          <br></br>
-          <div style={{ clear: "both", marginTop: "50px" }}>
-            {/* <InputGroup className="mb-3" style={{ borderRadius: "0px" }}>
-              <FormControl
-                placeholder="Search Articles"
-                aria-label="Search Articles"
-                aria-describedby="basic-addon2"
-              />
-              <InputGroup.Append>
-                <Button id="basic-addon2">
-                  <i className="fa fa-search"></i>
-                </Button>
-              </InputGroup.Append>
-            </InputGroup> */}
-
+          {/* <br></br> */}
+          <div style={{ clear: "both", marginTop: "50px", height: "100vh" }}>
             <div class="row">
               <div class="col-md-9">
-                <div class="card" style={{ minHeight: "50vh" }}>
-                  <Table responsive class="table table-striped">
+                <div class="card" style={{ minHeight: "70vh" }}>
+                  <Table responsive class="table table-striped" hover>
                     <thead class="thead-dark">
                       <tr>
-                        {/* <th>S.No</th> */}
                         <th>Title</th>
                         <th>Category</th>
                         <th>Date</th>
@@ -179,9 +150,11 @@ class Admin extends Component {
                     </thead>
                     <tbody>
                       {articles.length === 0 ? (
-                        <center>
-                          <p>No Articles Found</p>
-                        </center>
+                        <tr>
+                          <td colSpan="8">
+                            <center>No Articles Found</center>
+                          </td>
+                        </tr>
                       ) : (
                         articles.map((article, index) => {
                           return (
@@ -240,7 +213,7 @@ class Admin extends Component {
                 </div>
               </div>
               <div className="col-md-3">
-                <div className="card text-center bg-primary text-white mb-3">
+                <div className="card text-center bg-secondary text-white mb-3">
                   <div className="card-body">
                     <h3>Articles</h3>
                     <h4 className="display-4">

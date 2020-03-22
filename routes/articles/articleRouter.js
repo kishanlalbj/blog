@@ -26,10 +26,53 @@ router.get("/", (req, res) => {
             limit: limit
           };
         }
+
         res.send(results);
       },
       error => {
-        throw error;
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    );
+  } catch (error) {
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
+router.get("/drafts", (req, res) => {
+  try {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const results = {};
+
+    articleController.getDraftArticles(
+      articles => {
+        console.log(
+          "*******************",
+          JSON.stringify(articles, undefined, 2)
+        );
+        results.results = articles.slice(startIndex, endIndex);
+
+        if (endIndex < articles.length) {
+          results.next = {
+            page: page + 1,
+            limit: limit
+          };
+        }
+
+        if (startIndex > 0) {
+          results.previous = {
+            page: page - 1,
+            limit: limit
+          };
+        }
+
+        // console.log(JSON.stringify(results, undefined, 2));
+        res.send(results);
+      },
+      error => {
+        res.status(500).send({ message: "Internal Server Error" });
       }
     );
   } catch (error) {
@@ -81,7 +124,26 @@ router.post("/delete", (req, res) => {
         res.send(article);
       },
       error => {
-        throw error;
+        res.status(500).send({ message: "Internal Server error" });
+      }
+    );
+  } catch (error) {
+    res.status(500).send({ message: "Internal Server error" });
+  }
+});
+
+router.get("/remove/draft/:id", (req, res) => {
+  try {
+    console.log(JSON.stringify(req.params.id));
+    console.log(req.param.id);
+
+    articleController.deleteDraft(
+      req.params.id,
+      draft => {
+        res.send(draft);
+      },
+      error => {
+        res.status(500).send({ message: "Internal Server error" });
       }
     );
   } catch (error) {
@@ -97,7 +159,8 @@ router.post("/update", (req, res) => {
         res.send(article);
       },
       error => {
-        throw error;
+        console.log(error);
+        res.status(500).send({ message: "Internal Server Error" });
       }
     );
   } catch (error) {
@@ -116,7 +179,28 @@ router.post("/comment", (req, res) => {
         res.send(response);
       },
       error => {
-        throw error;
+        console.log(error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
+router.post("/draft", (req, res) => {
+  try {
+    console.log("called");
+    console.log(JSON.stringify(req.body, undefined, 2));
+    articleController.saveForLater(
+      req.body,
+      article => {
+        res.send(article);
+      },
+      error => {
+        console.log(error);
+        res.status(500).send({ message: "Internal Server Error" });
       }
     );
   } catch (error) {

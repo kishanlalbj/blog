@@ -14,10 +14,11 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  // articleCover: {
-  //   type: String,
-  //   required: true
-  // },
+  isPrivate: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   articleCategory: {
     type: String,
     required: true
@@ -53,6 +54,10 @@ const ArticleSchema = new Schema({
   visits: {
     type: Number,
     default: 0
+  },
+  lastModified: {
+    type: Date,
+    default: Date.now()
   },
   createdOn: {
     type: Date,

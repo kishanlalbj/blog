@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Form, Row, Col, Button, Modal } from "react-bootstrap";
+import { Container, Form, Alert, Col, Button, Modal } from "react-bootstrap";
 import ReactQuill, { Quill } from "react-quill";
 import quillEmoji from "quill-emoji";
 
@@ -36,7 +36,8 @@ class ArticleBuilder extends Component {
     articleContent: "",
     author: "",
     show: false,
-    message: ""
+    message: "",
+    showAlert: false
   };
 
   componentDidMount() {
@@ -59,12 +60,48 @@ class ArticleBuilder extends Component {
     this.setState({ show: !copy });
   };
 
-  closeModal = () => {
-    this.setState({
-      show: false
-    });
+  // closeModal = mode => {
+  //   this.setState({
+  //     show: false
+  //   });
+  //   if (mode !== "save") this.props.history.push("/admin");
+  // };
 
-    this.props.history.push("/admin");
+  saveDraft = () => {
+    const {
+      articleTitle,
+      articleSubtitle,
+      articleContent,
+      articleCategory
+    } = this.state;
+
+    let newArticle = {
+      articleTitle,
+      articleSubtitle,
+      articleCategory,
+      articleContent,
+      isPrivate: true,
+      author: this.props.auth.user.name
+    };
+
+    fetch("api/articles/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newArticle)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ message: "Article Saved Successfully" });
+        // this.props.history.push("/drafts");
+        // this.toggleModal();
+      })
+      .catch(err => {
+        this.setState({ message: "Sorry. Your article cannot be saved" });
+        console.log(err);
+      });
   };
 
   postArticle = () => {
@@ -96,7 +133,6 @@ class ArticleBuilder extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
         this.setState({ message: "Article Created Successfully" });
         this.toggleModal();
       })
@@ -107,21 +143,11 @@ class ArticleBuilder extends Component {
   };
 
   render() {
-    const emojiIcon =
-      '<svg class="i" viewBox="0 0 24 24"><use href="#emoticon-happy"></use></svg>';
-    const {
-      articleTitle,
-      articleSubtitle,
-      articleContent,
-      author,
-      articleCategory,
-      articleCategories
-    } = this.state;
     return (
       <div>
         <div
           className="overlay"
-          style={{ backgroundColor: "black", height: "10vh" }}
+          style={{ backgroundColor: "black", height: "70px" }}
         ></div>
 
         <Container style={{ marginTop: "10px" }}>
@@ -162,16 +188,6 @@ class ArticleBuilder extends Component {
                 </Form.Control>
               </Col>
             </Form.Row>
-            {/* <Form.Row>
-              <Col>
-                <Form.Label>Upload Cover Image</Form.Label>
-                <Form.Control
-                  type="file"
-                  name="articleCover"
-                  value={this.state.articleCover}
-                ></Form.Control>
-              </Col>
-            </Form.Row> */}
             <br></br>
             <Form.Row>
               <Col>
@@ -228,12 +244,17 @@ class ArticleBuilder extends Component {
                   }}
                 />
               </Col>
+              <Alert variant="success"> Article Saved </Alert>
             </Form.Row>
           </Form>
 
           <center style={{ clear: "both", marginTop: "50px" }}>
             <Button variant="primary" value="Create" onClick={this.postArticle}>
               Create
+            </Button>
+            &nbsp;
+            <Button variant="info" value="Save" onClick={this.saveDraft}>
+              Save Draft
             </Button>
             &nbsp;
             <Link to="/admin">

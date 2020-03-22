@@ -1,7 +1,8 @@
 const Article = require("../../models/Article");
+const Draft = require("../../models/Draft");
 
 const getArticles = (successCB, errorCB) => {
-  Article.find()
+  Article.find({ isPrivate: false })
     .sort({ createdOn: -1 })
     .then(
       articles => {
@@ -11,6 +12,18 @@ const getArticles = (successCB, errorCB) => {
         errorCB(err);
       }
     );
+};
+
+const getDraftArticles = (successCB, errorCB) => {
+  Article.find({ isPrivate: true })
+    .sort({ createdOn: -1 })
+    .then(drafts => {
+      console.log(JSON.stringify(drafts, undefined, 2));
+      successCB(drafts);
+    })
+    .catch(err => {
+      errorCB(err);
+    });
 };
 
 const getArticle = (id, successCB, errorCB) => {
@@ -69,6 +82,16 @@ const deleteArticle = (articleId, successCB, errorCB) => {
     });
 };
 
+const deleteDraft = (draftId, successCB, errorCB) => {
+  Draft.deleteOne({ _id: draftId })
+    .then(draft => {
+      successCB(draft);
+    })
+    .catch(err => {
+      errorCB(err);
+    });
+};
+
 const updateArticle = (article, successCB, errorCB) => {
   // console.log(article);
   Article.updateOne({ _id: article.id }, { $set: article }, { new: true })
@@ -80,11 +103,24 @@ const updateArticle = (article, successCB, errorCB) => {
     });
 };
 
+const saveForLater = async (article, successCB, errorCB) => {
+  try {
+    let newarticle = new Draft(article);
+    let response = await newarticle.save();
+    successCB(response);
+  } catch (error) {
+    errorCB(error);
+  }
+};
+
 module.exports = {
   getArticles,
   addArticle,
   deleteArticle,
   updateArticle,
   postComment,
-  getArticle
+  getArticle,
+  getDraftArticles,
+  saveForLater,
+  deleteDraft
 };

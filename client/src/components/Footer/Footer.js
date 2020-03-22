@@ -8,7 +8,7 @@ export default class Footer extends Component {
         <footer
           className="copyright text-muted"
           style={{
-            backgroundColor: "#565458"
+            backgroundColor: "#333"
           }}
         >
           <div className="container">
@@ -42,10 +42,10 @@ export default class Footer extends Component {
                   </li>
                 </ul>
                 <p className="copyright" style={{ color: "white" }}>
-                  Copyright &copy; Scribble 2020
+                  Scribbles v1.5.0
                 </p>
                 <p className="copyright" style={{ color: "white" }}>
-                  v1.3.1
+                  copyright &copy; {2020}
                 </p>
               </div>
             </div>

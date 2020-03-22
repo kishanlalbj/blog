@@ -18,6 +18,8 @@ import Profile from "./Profile/Profile";
 import HBD from "./Admin/HBD";
 import ResetPassword from "../components/Login/ResetPassword";
 import "quill-emoji/dist/quill-emoji.css";
+import PageNotFound from "../components/PageNotFound/PageNotFound";
+import Draft from "./Draft/Draft";
 
 if (localStorage.jwtToken) {
   //set Auth Token
@@ -39,23 +41,23 @@ if (localStorage.jwtToken) {
 function App() {
   return (
     <Provider store={store}>
-      <div className="">
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/admin" component={Admin} />
-            <Route exact path="/article/:id" component={Article} />
-            <Route exact path="/edit/:id" component={EditArticle} />
-            <Route exact path="/add" component={ArticleBuilder} />
-            <Route exact path="/hbd" component={HBD} />
-            <Route exact path="/resetpassword" component={ResetPassword} />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/admin" component={Admin} />
+          <Route exact path="/article/:id" component={Article} />
+          <Route exact path="/edit/:id" component={EditArticle} />
+          <Route exact path="/drafts" component={Draft} />
+          <Route exact path="/add" component={ArticleBuilder} />
+          <Route exact path="/hbd" component={HBD} />
+          <Route exact path="/resetpassword" component={ResetPassword} />
+          <Route component={PageNotFound} />
+        </Switch>
+      </Router>
+      <Footer />
     </Provider>
   );
 }

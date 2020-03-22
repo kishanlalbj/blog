@@ -1,10 +1,17 @@
 import React, { Component } from "react";
-import { Button, Modal, DropdownButton, Dropdown } from "react-bootstrap";
+import {
+  Button,
+  Modal,
+  DropdownButton,
+  Dropdown,
+  NavDropdown
+} from "react-bootstrap";
 import "../../containers/App.css";
 import Login from "../Login/Login";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "../../actions/authActions";
+import avatar from "../../assets/img/avatar.png";
 
 class Navbar extends Component {
   state = {
@@ -22,9 +29,9 @@ class Navbar extends Component {
   };
 
   logout = () => {
-    // console.log(this.props.auth);
     this.props.logoutUser(this.props.history);
   };
+
   login = () => {
     let { email, password } = this.state;
     let userData = {
@@ -32,7 +39,6 @@ class Navbar extends Component {
       password
     };
     this.props.loginUser(userData, this.props.history);
-    // console.log(this.props.auth);
 
     this.setState({
       isLoggedin: this.props.auth.isAuthenticated,
@@ -41,38 +47,6 @@ class Navbar extends Component {
       password: "",
       showLogin: false
     });
-
-    // fetch("/api/auth/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({ email, password })
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data);
-    //     let copyIsLogged = this.state.isLoggedin;
-    //     let copyMessage = this.state.message;
-    //     this.setState(
-    //       {
-    //         isLoggedin: !copyIsLogged,
-    //         message: "",
-    //         email: "",
-    //         password: "",
-    //         showLogin: false
-    //       },
-    //       () => {
-    //         const { pathname } = this.props.location;
-    //         this.props.history.push(pathname);
-    //       }
-    //     );
-    //   })
-    //   .catch(err => {
-    //     this.setState({
-    //       message: "Invalid Credentials"
-    //     });
-    //   });
   };
 
   handleChange = e => {
@@ -117,38 +91,101 @@ class Navbar extends Component {
 
                 {this.props.auth.isAuthenticated ? (
                   <>
+                    <NavDropdown
+                      title={<img src={avatar} width="24" />}
+                      id="collasible-nav-dropdown"
+                      className="nav-item"
+                      color="white"
+                      style={{
+                        borderRadius: "99px",
+                        color: "white",
+
+                        fontWeight: "400"
+                      }}
+                    >
+                      <NavDropdown.Item>
+                        <Link
+                          style={{ textDecoration: "none", color: "black" }}
+                          to="/admin"
+                        >
+                          Dashboard
+                        </Link>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <Link
+                          style={{
+                            textDecoration: "none",
+                            color: "black",
+                            width: "100%"
+                          }}
+                          to="/profile"
+                        >
+                          Profile
+                        </Link>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <Link
+                          style={{ textDecoration: "none", color: "black" }}
+                          to="/drafts"
+                        >
+                          Drafts
+                        </Link>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <Link
+                          style={{
+                            textDecoration: "none",
+                            color: "black",
+                            width: "100%"
+                          }}
+                          to="/hbd"
+                        >
+                          Wish
+                        </Link>
+                      </NavDropdown.Item>
+
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item onClick={this.logout}>
+                        Logout
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                    {/* <li className="nav-item">
+                      <Link to="/hdb" className="nav-link">
+                        HBD
+                      </Link>
+                    </li>
                     <li className="nav-item">
                       <Link to="/admin" className="nav-link">
                         Dashboard
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Button
-                        // className="nav-link"
-                        style={{
-                          color: "black",
-                          backgroundColor: "white",
-                          borderColor: "white"
-                        }}
+                      <Link
+                        className="nav-link"
+                        // style={{
+                        //   color: "black",
+                        //   backgroundColor: "white",
+                        //   borderColor: "white"
+                        // }}
                         onClick={this.logout}
                       >
                         Logout
-                      </Button>
-                    </li>
+                      </Link>
+                    </li> */}
                   </>
                 ) : (
                   <li className="nav-item">
-                    <Button
-                      // className="nav-link"
-                      style={{
-                        color: "black",
-                        backgroundColor: "white",
-                        borderColor: "white"
-                      }}
+                    <Link
+                      className="nav-link"
+                      // style={{
+                      //   color: "black",
+                      //   backgroundColor: "white",
+                      //   borderColor: "white"
+                      // }}
                       onClick={this.toggleLogin}
                     >
                       Login
-                    </Button>
+                    </Link>
                   </li>
                 )}
               </ul>
@@ -178,7 +215,6 @@ const mapStateToProp = state => ({
   err: state.err
 });
 
-export default connect(
-  mapStateToProp,
-  { loginUser, logoutUser }
-)(withRouter(Navbar));
+export default connect(mapStateToProp, { loginUser, logoutUser })(
+  withRouter(Navbar)
+);

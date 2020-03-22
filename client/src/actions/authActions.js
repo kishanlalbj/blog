@@ -5,7 +5,6 @@ import setAuthHeader from "./../utils/setAuthHeader";
 import jwt_decode from "jwt-decode";
 
 // Login User
-
 export const loginUser = (userData, history) => dispatch => {
   // console.log(userData);
   axios
@@ -22,7 +21,7 @@ export const loginUser = (userData, history) => dispatch => {
       // console.log(decoded);
       //Set Current User
       dispatch(setCurrentUser(decoded));
-      history.push("/hbd");
+      history.push("/admin");
     })
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };

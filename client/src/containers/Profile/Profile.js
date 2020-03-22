@@ -126,13 +126,12 @@ class Profile extends Component {
       <div>
         <div
           className="overlay"
-          style={{ backgroundColor: "black", height: "10vh" }}
+          style={{ backgroundColor: "black", height: "65px" }}
         ></div>
         <br></br>
         <div className="container">
           <div className="row">
             <div className="col-md-3">
-              {/* <h3>Your Avatar</h3> */}
               <img
                 src={avatar}
                 alt="avatar"

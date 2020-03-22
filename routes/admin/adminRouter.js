@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Profile = require("../../models/Profile");
 const adminController = require("../admin/adminController");
+
 router.get("/dashboard", (req, res) => {
   try {
     adminController.getArticlesCount(
