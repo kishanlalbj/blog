@@ -138,7 +138,7 @@ class Navbar extends Component {
                         </Link>
                       </NavDropdown.Item>
 
-                      <NavDropdown.Item>
+                      {/* <NavDropdown.Item>
                         <Link
                           style={{
                             textDecoration: "none",
@@ -153,7 +153,7 @@ class Navbar extends Component {
                           />{" "}
                           Birthday Wish
                         </Link>
-                      </NavDropdown.Item>
+                      </NavDropdown.Item> */}
 
                       <NavDropdown.Divider />
                       <NavDropdown.Item onClick={this.logout}>
