@@ -18,7 +18,8 @@ class Admin extends Component {
     articleCategory: "",
     articleContent: "",
     deleteId: "",
-    confirmModal: false
+    confirmModal: false,
+    totalDrafts: 0
   };
 
   getArticles(page) {
@@ -95,7 +96,8 @@ class Admin extends Component {
         // console.log("COUNT", response.data);
 
         this.setState({
-          totalPosts: response.data.totalArticles
+          totalPosts: response.data.public,
+          totalDrafts: response.data.draft
         });
       })
       .catch(err => {
@@ -223,14 +225,15 @@ class Admin extends Component {
                   </div>
                 </div>
 
-                {/* <div className="card text-center bg-success text-white mb-3">
+                <div className="card text-center bg-success text-white mb-3">
                   <div className="card-body">
-                    <h3>Views</h3>
+                    <h3>Drafts</h3>
                     <h4 className="display-4">
-                      <i className="fas fa-eye"></i> 234
+                      <i className="fas fa-folder-open"></i>{" "}
+                      {this.state.totalDrafts}
                     </h4>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>

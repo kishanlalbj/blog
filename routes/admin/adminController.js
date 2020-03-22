@@ -11,11 +11,20 @@ const getDashboardDetails = (successCB, errorCB) => {
 };
 
 const getArticlesCount = (successCB, errorCB) => {
-  Article.find()
+  let result = {};
+  Article.find({ isPrivate: false })
     .countDocuments()
     .then(count => {
       // console.log(count);
-      successCB(count);
+      // successCB(count);
+      result.public = count;
+
+      Article.find({ isPrivate: true })
+        .countDocuments()
+        .then(draftCount => {
+          result.draft = draftCount;
+          successCB(result);
+        });
     })
     .catch(err => {
       console.log(err);

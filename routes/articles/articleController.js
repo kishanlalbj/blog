@@ -83,7 +83,7 @@ const deleteArticle = (articleId, successCB, errorCB) => {
 };
 
 const deleteDraft = (draftId, successCB, errorCB) => {
-  Draft.deleteOne({ _id: draftId })
+  Article.deleteOne({ _id: draftId })
     .then(draft => {
       successCB(draft);
     })

@@ -5,6 +5,7 @@ import quillEmoji from "quill-emoji";
 
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import axios from "axios";
 
 const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
 Quill.register(
@@ -20,6 +21,7 @@ class ArticleBuilder extends Component {
   state = {
     articleTitle: "",
     articleSubtitle: "",
+    savedArticleId: "",
     articleCategories: [
       "Life",
       "Travel",
@@ -60,12 +62,31 @@ class ArticleBuilder extends Component {
     this.setState({ show: !copy });
   };
 
-  // closeModal = mode => {
-  //   this.setState({
-  //     show: false
-  //   });
-  //   if (mode !== "save") this.props.history.push("/admin");
-  // };
+  closeModal = mode => {
+    this.setState({
+      show: false
+    });
+  };
+
+  updateArticle = id => {
+    let obj = {
+      articleTitle: this.state.articleTitle,
+      articleSubtitle: this.state.articleSubtitle,
+      articleContent: this.state.articleContent,
+      articleCategory: this.state.articleCategory,
+      isPrivate: false,
+      id
+    };
+
+    axios
+      .post("/api/articles/update", obj)
+      .then(response => {
+        this.toggleModal();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   saveDraft = () => {
     const {
@@ -93,10 +114,13 @@ class ArticleBuilder extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        this.setState({ message: "Article Saved Successfully" });
-        // this.props.history.push("/drafts");
-        // this.toggleModal();
+        console.log("SAVED DRAFT", data);
+        this.setState({
+          message: "Article Saved Successfully",
+          savedArticleId: data._id
+        });
+        this.toggleModal();
+        this.props.history.push("/admin");
       })
       .catch(err => {
         this.setState({ message: "Sorry. Your article cannot be saved" });
@@ -109,9 +133,8 @@ class ArticleBuilder extends Component {
       articleTitle,
       articleSubtitle,
       articleContent,
-      author,
       articleCategory,
-      articleCategories
+      savedArticleId
     } = this.state;
 
     let newArticle = {
@@ -121,25 +144,28 @@ class ArticleBuilder extends Component {
       articleContent,
       author: this.props.auth.user.name
     };
-    // console.log(this.props.auth);
-    // console.log(newArticle);
 
-    fetch("/api/articles/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(newArticle)
-    })
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ message: "Article Created Successfully" });
-        this.toggleModal();
+    if (savedArticleId.length !== 0) {
+      this.updateArticle(savedArticleId);
+    } else {
+      fetch("/api/articles/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newArticle)
       })
-      .catch(err => {
-        this.setState({ message: "Sorry. Your article cannot be posted" });
-        console.log(err);
-      });
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ message: "Article Created Successfully" });
+          this.toggleModal();
+          this.props.history.push("/admin");
+        })
+        .catch(err => {
+          this.setState({ message: "Sorry. Your article cannot be posted" });
+          console.log(err);
+        });
+    }
   };
 
   render() {
@@ -147,7 +173,7 @@ class ArticleBuilder extends Component {
       <div>
         <div
           className="overlay"
-          style={{ backgroundColor: "black", height: "70px" }}
+          style={{ backgroundColor: "black", height: "65px" }}
         ></div>
 
         <Container style={{ marginTop: "10px" }}>
@@ -244,17 +270,16 @@ class ArticleBuilder extends Component {
                   }}
                 />
               </Col>
-              <Alert variant="success"> Article Saved </Alert>
             </Form.Row>
           </Form>
 
           <center style={{ clear: "both", marginTop: "50px" }}>
             <Button variant="primary" value="Create" onClick={this.postArticle}>
-              Create
+              Publish
             </Button>
             &nbsp;
             <Button variant="info" value="Save" onClick={this.saveDraft}>
-              Save Draft
+              Save and Exit
             </Button>
             &nbsp;
             <Link to="/admin">

@@ -27,7 +27,11 @@ class About extends Component {
   }
   render() {
     return (
-      <div>
+      <div
+        style={{
+          height: "100vh"
+        }}
+      >
         <Hero isAbout={true} isEdit={true} />
         <div className="container">
           <div className="row">

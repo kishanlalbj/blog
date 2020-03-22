@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Modal,
-  DropdownButton,
-  Dropdown,
-  NavDropdown
-} from "react-bootstrap";
+import { Modal, NavDropdown } from "react-bootstrap";
 import "../../containers/App.css";
 import Login from "../Login/Login";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "../../actions/authActions";
 import avatar from "../../assets/img/avatar.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFolderOpen,
+  faUser,
+  faSignOutAlt,
+  faDesktop,
+  faBirthdayCake
+} from "@fortawesome/free-solid-svg-icons";
 
 class Navbar extends Component {
   state = {
@@ -108,7 +110,18 @@ class Navbar extends Component {
                           style={{ textDecoration: "none", color: "black" }}
                           to="/admin"
                         >
+                          <FontAwesomeIcon icon={faDesktop} color={"#333"} />{" "}
                           Dashboard
+                        </Link>
+                      </NavDropdown.Item>
+
+                      <NavDropdown.Item>
+                        <Link
+                          style={{ textDecoration: "none", color: "black" }}
+                          to="/drafts"
+                        >
+                          <FontAwesomeIcon icon={faFolderOpen} color={"#333"} />{" "}
+                          Drafts
                         </Link>
                       </NavDropdown.Item>
                       <NavDropdown.Item>
@@ -120,17 +133,11 @@ class Navbar extends Component {
                           }}
                           to="/profile"
                         >
-                          Profile
+                          <FontAwesomeIcon icon={faUser} color={"#333"} />
+                          &nbsp; Profile
                         </Link>
                       </NavDropdown.Item>
-                      <NavDropdown.Item>
-                        <Link
-                          style={{ textDecoration: "none", color: "black" }}
-                          to="/drafts"
-                        >
-                          Drafts
-                        </Link>
-                      </NavDropdown.Item>
+
                       <NavDropdown.Item>
                         <Link
                           style={{
@@ -140,12 +147,17 @@ class Navbar extends Component {
                           }}
                           to="/hbd"
                         >
-                          Wish
+                          <FontAwesomeIcon
+                            icon={faBirthdayCake}
+                            color={"#333"}
+                          />{" "}
+                          Birthday Wish
                         </Link>
                       </NavDropdown.Item>
 
                       <NavDropdown.Divider />
                       <NavDropdown.Item onClick={this.logout}>
+                        <FontAwesomeIcon icon={faSignOutAlt} color={"#333"} />{" "}
                         Logout
                       </NavDropdown.Item>
                     </NavDropdown>

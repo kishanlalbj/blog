@@ -42,6 +42,7 @@ class Draft extends Component {
     this.setState({ confirmModal: !toggle, deleteId: id });
   };
 
+  handleEdit = id => this.props.history.push("/edit/" + id);
   deleteArticle = async () => {
     let response = await fetch(
       `/api/articles/remove/draft/${this.state.deleteId}`
@@ -98,6 +99,7 @@ class Draft extends Component {
                             icon={faEdit}
                             color="#333"
                             style={{ cursor: "pointer" }}
+                            onClick={() => this.handleEdit(article._id)}
                           />
                           &nbsp; &nbsp;
                           <FontAwesomeIcon

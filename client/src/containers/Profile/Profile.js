@@ -123,36 +123,43 @@ class Profile extends Component {
 
   render() {
     return (
-      <div>
+      <div
+        style={{
+          height: "100vh"
+        }}
+      >
         <div
           className="overlay"
           style={{ backgroundColor: "black", height: "65px" }}
         ></div>
         <br></br>
-        <div className="container">
+        <div>
           <div className="row">
             <div className="col-md-3">
-              <img
-                src={avatar}
-                alt="avatar"
-                style={{
-                  borderRadius: "10000px"
-                }}
-                className="d-block img-fluid mb-3"
-              />
+              <center>
+                <img
+                  src={avatar}
+                  alt="avatar"
+                  style={{
+                    borderRadius: "10000px"
+                  }}
+                  className="d-block img-fluid mb-3"
+                  width="248"
+                />
 
-              <input type="file" onChange={this.uploadImage} disabled />
-              <br></br>
-              <br></br>
+                {/* <input type="file" onChange={this.uploadImage} disabled /> */}
+                <br></br>
+                <br></br>
 
-              <button
-                disabled
-                onClick={this.updateImage}
-                style={{ width: "66%" }}
-                className="btn btn-danger"
-              >
-                upload
-              </button>
+                <button
+                  disabled
+                  onClick={this.updateImage}
+                  style={{ width: "66%" }}
+                  className="btn btn-danger"
+                >
+                  upload
+                </button>
+              </center>
             </div>
             <div className="col-md-9">
               {/* <h4>Edit Profile</h4> */}

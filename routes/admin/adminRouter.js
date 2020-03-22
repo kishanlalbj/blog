@@ -5,9 +5,9 @@ const adminController = require("../admin/adminController");
 router.get("/dashboard", (req, res) => {
   try {
     adminController.getArticlesCount(
-      count => {
+      response => {
         // console.log(count);
-        res.send({ totalArticles: count });
+        res.send(response);
       },
       err => {
         console.log(err);

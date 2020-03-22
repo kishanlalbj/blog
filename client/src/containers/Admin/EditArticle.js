@@ -22,7 +22,33 @@ class EditArticle extends Component {
     articleContent: "",
     articleSubtitle: "",
     articleCategory: "",
-    modal: false
+    modal: false,
+    message: ""
+  };
+
+  publish = () => {
+    let obj = {
+      articleTitle: this.state.articleTitle,
+      articleSubtitle: this.state.articleSubtitle,
+      articleContent: this.state.articleContent,
+      articleCategory: this.state.articleCategory,
+      isPrivate: false,
+      createdOn: Date.now(),
+      id: this.props.match.params.id
+    };
+
+    axios
+      .post("/api/articles/update", obj)
+      .then(response => {
+        this.setState({
+          message: "Article Published Successfully"
+        });
+        this.toggleModal();
+        this.props.history.push("/admin");
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   saveChanges = () => {
@@ -40,6 +66,7 @@ class EditArticle extends Component {
       .post("/api/articles/update", obj)
       .then(response => {
         // console.log(response.data);
+        this.setState({ message: "Article saved successfully" });
         this.toggleModal();
       })
       .catch(err => {
@@ -70,7 +97,8 @@ class EditArticle extends Component {
           articleTitle: response.data.articleTitle,
           articleSubtitle: response.data.articleSubtitle,
           articleContent: response.data.articleContent,
-          articleCategory: response.data.articleCategory
+          articleCategory: response.data.articleCategory,
+          isPrivate: response.data.isPrivate
         });
       })
       .catch(err => {
@@ -83,7 +111,7 @@ class EditArticle extends Component {
       <div>
         <div
           className="overlay"
-          style={{ backgroundColor: "black", height: "10vh" }}
+          style={{ backgroundColor: "black", height: "65px" }}
         ></div>
         <Container style={{ marginTop: "10px" }}>
           <center>
@@ -195,7 +223,17 @@ class EditArticle extends Component {
             </Form.Row>
           </Form>
           <center style={{ clear: "both", marginTop: "50px" }}>
-            <Button variant="primary" value="Create" onClick={this.saveChanges}>
+            {this.state.isPrivate ? (
+              <Button variant="primary" onClick={this.publish}>
+                Save and Publish
+              </Button>
+            ) : null}
+            &nbsp;
+            <Button
+              variant="secondary"
+              value="Create"
+              onClick={this.saveChanges}
+            >
               Save Changes
             </Button>
             &nbsp;
@@ -213,7 +251,7 @@ class EditArticle extends Component {
         <Modal show={this.state.modal} onHide={this.toggleModal}>
           <Modal.Header closeButton>Message</Modal.Header>
 
-          <Modal.Body>Article updated successfully</Modal.Body>
+          <Modal.Body>{this.state.message}</Modal.Body>
           <Modal.Footer>
             <Button onClick={this.toggleModal}>Close</Button>
           </Modal.Footer>
