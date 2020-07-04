@@ -3,6 +3,7 @@ import { Table, Button, Modal } from "react-bootstrap";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 class Draft extends Component {
   state = {
@@ -10,7 +11,7 @@ class Draft extends Component {
     pagination: {},
     deleteId: "",
     confirmModal: false,
-    drafts: []
+    drafts: [],
   };
 
   componentDidMount() {
@@ -18,12 +19,23 @@ class Draft extends Component {
   }
 
   async getDraftedArticles(page) {
-    let response = await fetch(`/api/articles/drafts?page=${page}&limit=5`);
+    let drafts;
+    const config = {
+      headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` },
+    };
 
-    let drafts = await response.json();
-    console.log("DRAFTSSSSSS", drafts);
+    axios
+      .get(`/api/articles/drafts?page=${page}&limit=5`, config)
+      .then((response) => {
+        // console.log(response);
+        drafts = response.data;
+        this.setState({ drafts: drafts.results, pagination: drafts });
+      })
+      .catch((err) => console.log(err));
+    // let response = await fetch(`/api/articles/drafts?page=${page}&limit=5`);
 
-    this.setState({ drafts: drafts.results, pagination: drafts });
+    // let drafts = await response.json();
+    // // console.log("DRAFTSSSSSS", drafts);
   }
 
   next = () => {
@@ -36,29 +48,34 @@ class Draft extends Component {
     this.getDraftedArticles(page);
   };
 
-  toggleConfirmModal = id => {
+  toggleConfirmModal = (id) => {
     let toggle = this.state.confirmModal;
 
     this.setState({ confirmModal: !toggle, deleteId: id });
   };
 
-  handleEdit = id => this.props.history.push("/edit/" + id);
+  handleEdit = (id) => this.props.history.push("/edit/" + id);
   deleteArticle = async () => {
-    let response = await fetch(
-      `/api/articles/remove/draft/${this.state.deleteId}`
-    );
-    let data = await response.json();
+    const config = {
+      headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` },
+    };
 
-    // let copy = [...this.state.drafts];
-    // let newcopy = copy.filter(obj => {
-    //   return obj._id !== this.state.deleteId;
-    // });
-    this.getDraftedArticles(this.state.page);
-    this.setState({
-      confirmModal: false,
-      deleteId: ""
-      // drafts: newcopy
-    });
+    axios
+      .get(`/api/articles/remove/draft/${this.state.deleteId}`, config)
+      .then((response) => {
+        this.getDraftedArticles(this.state.page);
+        this.setState({
+          confirmModal: false,
+          deleteId: "",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // let response = await fetch(
+    //   `/api/articles/remove/draft/${this.state.deleteId}`
+    // );
+    // let data = await response.json();
   };
 
   render() {
@@ -73,8 +90,8 @@ class Draft extends Component {
             <br></br>
             <h5>Draft Articles</h5>
 
-            <Table responsive class="table table-striped" hover>
-              <thead class="thead-dark">
+            <Table responsive className="table table-striped" hover>
+              <thead className="thead-dark">
                 <tr>
                   <th>Title</th>
                   <th>Category</th>
@@ -85,7 +102,7 @@ class Draft extends Component {
               </thead>
               <tbody>
                 {this.state.drafts.length !== 0 ? (
-                  this.state.drafts.map(article => {
+                  this.state.drafts.map((article) => {
                     return (
                       <tr key={article._id}>
                         <td>{article.articleTitle}</td>

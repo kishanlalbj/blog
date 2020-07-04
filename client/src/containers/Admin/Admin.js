@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-
 import { Container, Button, Table, Modal } from "react-bootstrap";
 import axios from "axios";
 
@@ -19,28 +18,28 @@ class Admin extends Component {
     articleContent: "",
     deleteId: "",
     confirmModal: false,
-    totalDrafts: 0
+    totalDrafts: 0,
   };
 
   getArticles(page) {
     axios
       .get(`/api/articles?page=${page}&limit=10`)
       // .then(response => response.json())
-      .then(response => {
+      .then((response) => {
         // console.log(response.data);
 
         if (response.data.results.length === 0) {
           this.setState({
-            message: "No Articles Found"
+            message: "No Articles Found",
           });
         } else {
           this.setState({
             articles: response.data.results,
-            pagination: response.data
+            pagination: response.data,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -55,52 +54,58 @@ class Admin extends Component {
     this.getArticles(page);
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     // console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  toggleConfirmModal = id => {
+  toggleConfirmModal = (id) => {
     let toggle = this.state.confirmModal;
 
     this.setState({ confirmModal: !toggle, deleteId: id });
   };
 
-  deleteArticle = id => {
+  deleteArticle = (id) => {
+    const config = {
+      headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` },
+    };
     axios
-      .post("/api/articles/delete", { id: this.state.deleteId })
-      .then(response => {
+      .post("/api/articles/delete", { id: this.state.deleteId }, config)
+      .then((response) => {
         // console.log(response.data);
         let copy = [...this.state.articles];
         let id = this.state.deleteId;
-        let newcopy = copy.filter(function(obj) {
+        let newcopy = copy.filter(function (obj) {
           return obj._id !== id;
         });
         // console.log(newcopy);
         this.setState({
           confirmModal: false,
           deleteId: "",
-          articles: newcopy
+          articles: newcopy,
         });
         this.getDashboardDetails();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
 
   getDashboardDetails = () => {
+    const config = {
+      headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` },
+    };
     axios
-      .get("/api/admin/dashboard")
-      .then(response => {
+      .get("/api/admin/dashboard", config)
+      .then((response) => {
         // console.log("COUNT", response.data);
 
         this.setState({
           totalPosts: response.data.public,
-          totalDrafts: response.data.draft
+          totalDrafts: response.data.draft,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -108,7 +113,7 @@ class Admin extends Component {
   componentDidMount() {
     // console.log(this.props.auth.isAuthenticated);
     if (!this.props.auth.isAuthenticated) {
-      console.log("Hello");
+      // console.log("Hello");
       this.props.history.push("/");
     } else {
       this.getDashboardDetails();
@@ -257,10 +262,10 @@ class Admin extends Component {
   }
 }
 
-const mapStateToProp = state => ({
+const mapStateToProp = (state) => ({
   auth: state.auth,
   isAuthenticated: state.isAuthenticated,
-  err: state.err
+  err: state.err,
 });
 
 export default connect(mapStateToProp)(withRouter(Admin));

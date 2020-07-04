@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 class Login extends Component {
   render() {
@@ -13,7 +13,7 @@ class Login extends Component {
               type="email"
               placeholder="Enter email"
               name="email"
-              onChange={e => this.props.handleChange(e)}
+              onChange={(e) => this.props.handleChange(e)}
             />
           </Form.Group>
 
@@ -23,15 +23,13 @@ class Login extends Component {
               type="password"
               placeholder="Password"
               name="password"
-              onChange={e => this.props.handleChange(e)}
+              onChange={(e) => this.props.handleChange(e)}
             />
           </Form.Group>
           <center>
             <Button variant="primary" onClick={this.props.onLogin}>
               Login
             </Button>
-            {/* &nbsp; */}
-            {/* <Link to="#">Forgot Password ?</Link> */}
           </center>
         </Form>
       </div>

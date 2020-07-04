@@ -6,7 +6,7 @@ import Life from "../../assets/img/life.jpg";
 
 class ArticleHero extends Component {
   state = {
-    background: ""
+    background: "",
   };
 
   // giveLike = () => {
@@ -14,7 +14,7 @@ class ArticleHero extends Component {
   // };
 
   render() {
-    console.log(this.props.comments);
+    // console.log(this.props.comments);
     return (
       <div>
         <header
@@ -23,7 +23,7 @@ class ArticleHero extends Component {
             background: `url(${Life})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            height: "100vh"
+            height: "100vh",
           }}
         >
           <div className="overlay"></div>

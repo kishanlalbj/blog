@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Form, Row, Col, Button, Modal } from "react-bootstrap";
+import { Container, Form, Col, Button, Modal } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -17,13 +17,13 @@ class EditArticle extends Component {
       "Retro",
       "Family",
       "Nature",
-      "Fashion"
+      "Fashion",
     ],
     articleContent: "",
     articleSubtitle: "",
     articleCategory: "",
     modal: false,
-    message: ""
+    message: "",
   };
 
   publish = () => {
@@ -34,19 +34,23 @@ class EditArticle extends Component {
       articleCategory: this.state.articleCategory,
       isPrivate: false,
       createdOn: Date.now(),
-      id: this.props.match.params.id
+      id: this.props.match.params.id,
+    };
+
+    const config = {
+      headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` },
     };
 
     axios
-      .post("/api/articles/update", obj)
-      .then(response => {
+      .post("/api/articles/update", obj, config)
+      .then((response) => {
         this.setState({
-          message: "Article Published Successfully"
+          message: "Article Published Successfully",
         });
         this.toggleModal();
         this.props.history.push("/admin");
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -57,19 +61,22 @@ class EditArticle extends Component {
       articleSubtitle: this.state.articleSubtitle,
       articleContent: this.state.articleContent,
       articleCategory: this.state.articleCategory,
-      id: this.props.match.params.id
+      id: this.props.match.params.id,
     };
 
     // console.log(obj);
+    const config = {
+      headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` },
+    };
 
     axios
-      .post("/api/articles/update", obj)
-      .then(response => {
+      .post("/api/articles/update", obj, config)
+      .then((response) => {
         // console.log(response.data);
         this.setState({ message: "Article saved successfully" });
         this.toggleModal();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -79,29 +86,29 @@ class EditArticle extends Component {
     this.setState({ modal: !copy });
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     // console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleEditor = value => {
+  handleEditor = (value) => {
     this.setState({ articleContent: value });
   };
 
   componentDidMount() {
     axios
       .get("/api/articles/" + this.props.match.params.id)
-      .then(response => {
+      .then((response) => {
         // console.log(response.data);
         this.setState({
           articleTitle: response.data.articleTitle,
           articleSubtitle: response.data.articleSubtitle,
           articleContent: response.data.articleContent,
           articleCategory: response.data.articleCategory,
-          isPrivate: response.data.isPrivate
+          isPrivate: response.data.isPrivate,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -189,7 +196,7 @@ class EditArticle extends Component {
                     "link",
                     "image",
                     "clean",
-                    "emoji"
+                    "emoji",
                   ]}
                   modules={{
                     toolbar: [
@@ -200,23 +207,23 @@ class EditArticle extends Component {
                         "underline",
                         "strike",
                         "blockquote",
-                        "code-block"
+                        "code-block",
                       ],
                       [{ color: [] }, { background: [] }],
                       [
                         { list: "ordered" },
                         { list: "bullet" },
                         { indent: "-1" },
-                        { indent: "+1" }
+                        { indent: "+1" },
                       ],
                       [{ align: [] }],
                       ["emoji"],
                       ["link", "image"],
-                      ["clean"]
+                      ["clean"],
                     ],
                     "emoji-toolbar": true,
                     "emoji-textarea": true,
-                    "emoji-shortname": true
+                    "emoji-shortname": true,
                   }}
                 />
               </Col>
@@ -261,10 +268,10 @@ class EditArticle extends Component {
   }
 }
 
-const mapStateToProp = state => ({
+const mapStateToProp = (state) => ({
   auth: state.auth,
   isAuthenticated: state.isAuthenticated,
-  err: state.err
+  err: state.err,
 });
 
 export default connect(mapStateToProp)(withRouter(EditArticle));

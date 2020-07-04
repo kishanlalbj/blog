@@ -15,7 +15,7 @@ class Profile extends Component {
     bio: "",
     loader: 0,
     showModal: false,
-    message: ""
+    message: "",
   };
 
   componentDidMount() {
@@ -24,8 +24,8 @@ class Profile extends Component {
       this.props.history.push("/");
     } else {
       fetch("/api/profile")
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           // console.log(data);
           this.setState({
             id: data[0]._id,
@@ -33,27 +33,30 @@ class Profile extends Component {
             lastName: data[0].lastName,
             avatar: data[0].avatar,
             email: data[0].email,
-            bio: data[0].bio
+            bio: data[0].bio,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
   }
 
-  onSaveProfile = id => {
+  onSaveProfile = (id) => {
     let profile = {
       id: id,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       email: this.state.email,
-      bio: this.state.bio
+      bio: this.state.bio,
     };
     // console.log(profile);
+    const config = {
+      headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` },
+    };
     axios
-      .post("/api/profile/update", profile)
-      .then(response => {
+      .post("/api/profile/update", profile, config)
+      .then((response) => {
         // console.log(response.data);
         let copyModal = this.state.showModal;
         this.setState({
@@ -63,12 +66,12 @@ class Profile extends Component {
           email: response.data.email,
           bio: response.data.bio,
           showModal: !copyModal,
-          message: "Profile Updated Successfully"
+          message: "Profile Updated Successfully",
         });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
-          message: "Error in updated successfully"
+          message: "Error in updated successfully",
         });
         console.groupEnd(err);
       });
@@ -77,17 +80,17 @@ class Profile extends Component {
   toggleModal = () => {
     let copyModal = this.state.showModal;
     this.setState({
-      showModal: !copyModal
+      showModal: !copyModal,
     });
   };
 
-  uploadImage = e => {
+  uploadImage = (e) => {
     // console.log(e.target.files[0]);
-    console.log("Image upload");
+    // console.log("Image upload");
     this.setState(
       {
         avatar: e.target.files[0],
-        loading: 0
+        loading: 0,
       },
       () => {
         // console.log(this.state.avatar);
@@ -103,20 +106,20 @@ class Profile extends Component {
       method: "post",
       url: "/api/profile/upload",
       data: data,
-      config: { headers: { "Content-Type": "multipart/form-data" } }
+      config: { headers: { "Content-Type": "multipart/form-data" } },
     })
-      .then(response => {
+      .then((response) => {
         // console.log(response.data);
         this.setState({
-          avatar: ""
+          avatar: "",
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     // console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -125,7 +128,7 @@ class Profile extends Component {
     return (
       <div
         style={{
-          height: "100vh"
+          height: "100vh",
         }}
       >
         <div
@@ -141,7 +144,7 @@ class Profile extends Component {
                   src={avatar}
                   alt="avatar"
                   style={{
-                    borderRadius: "10000px"
+                    borderRadius: "10000px",
                   }}
                   className="d-block img-fluid mb-3"
                   width="248"
@@ -246,10 +249,10 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProp = state => ({
+const mapStateToProp = (state) => ({
   auth: state.auth,
   isAuthenticated: state.isAuthenticated,
-  err: state.err
+  err: state.err,
 });
 
 export default connect(mapStateToProp)(withRouter(Profile));

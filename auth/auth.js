@@ -5,7 +5,7 @@ const passport = require("passport");
 const User = require("../models/User");
 
 router.post("/register", (req, res) => {
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       return res.status(400).json({ mesage: "Email already registered..." });
     } else {
@@ -21,15 +21,15 @@ router.post("/register", (req, res) => {
             username: req.body.username,
             email: req.body.email,
             bio: req.body.bio,
-            password: hash
+            password: hash,
           });
 
           newUser
             .save()
-            .then(user => {
+            .then((user) => {
               res.send(user);
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
               res.status(500).json({ message: "Internal Server Error" });
             });
@@ -41,18 +41,18 @@ router.post("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
   User.findOne({ email: req.body.email })
-    .then(user => {
+    .then((user) => {
       if (!user) {
         return res.status(400).json({ message: "Email is not registered" });
       }
-      console.log("TEST", req.body.password);
+      // console.log("TEST", req.body.password);
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
         if (err) throw err;
         if (isMatch) {
           const payload = {
             id: user._id,
             email: user.email,
-            name: user.firstName + " " + user.lastName
+            name: user.firstName + " " + user.lastName,
           };
           jwt.sign(
             payload,
@@ -68,7 +68,7 @@ router.post("/login", (req, res) => {
         }
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({ message: "Internal Server Error" });
     });

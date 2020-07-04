@@ -15,7 +15,7 @@ import Article from "./Article/Article";
 import ArticleBuilder from "./ArticleBuilder/ArticleBuilder";
 import EditArticle from "./Admin/EditArticle";
 import Profile from "./Profile/Profile";
-import HBD from "./Admin/HBD";
+
 import ResetPassword from "../components/Login/ResetPassword";
 import "quill-emoji/dist/quill-emoji.css";
 import PageNotFound from "../components/PageNotFound/PageNotFound";
@@ -52,7 +52,7 @@ function App() {
           <Route exact path="/edit/:id" component={EditArticle} />
           <Route exact path="/drafts" component={Draft} />
           <Route exact path="/add" component={ArticleBuilder} />
-          <Route exact path="/hbd" component={HBD} />
+          {/* <Route exact path="/hbd" component={HBD} /> */}
           <Route exact path="/resetpassword" component={ResetPassword} />
           <Route component={PageNotFound} />
         </Switch>

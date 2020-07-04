@@ -12,7 +12,6 @@ import {
   faUser,
   faSignOutAlt,
   faDesktop,
-  faBirthdayCake
 } from "@fortawesome/free-solid-svg-icons";
 
 class Navbar extends Component {
@@ -21,7 +20,7 @@ class Navbar extends Component {
     isLoggedin: false,
     message: "",
     email: "",
-    password: ""
+    password: "",
   };
 
   toggleLogin = () => {
@@ -38,7 +37,7 @@ class Navbar extends Component {
     let { email, password } = this.state;
     let userData = {
       email,
-      password
+      password,
     };
     this.props.loginUser(userData, this.props.history);
 
@@ -47,16 +46,16 @@ class Navbar extends Component {
       message: "",
       email: "",
       password: "",
-      showLogin: false
+      showLogin: false,
     });
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   componentDidMount() {
-    console.log(this.props.auth);
+    // console.log(this.props.auth);
   }
   render() {
     return (
@@ -94,7 +93,7 @@ class Navbar extends Component {
                 {this.props.auth.isAuthenticated ? (
                   <>
                     <NavDropdown
-                      title={<img src={avatar} width="24" />}
+                      title={<img src={avatar} width="24" alt="avatar" />}
                       id="collasible-nav-dropdown"
                       className="nav-item"
                       color="white"
@@ -102,7 +101,7 @@ class Navbar extends Component {
                         borderRadius: "99px",
                         color: "white",
 
-                        fontWeight: "400"
+                        fontWeight: "400",
                       }}
                     >
                       <NavDropdown.Item>
@@ -129,7 +128,7 @@ class Navbar extends Component {
                           style={{
                             textDecoration: "none",
                             color: "black",
-                            width: "100%"
+                            width: "100%",
                           }}
                           to="/profile"
                         >
@@ -221,10 +220,10 @@ class Navbar extends Component {
   }
 }
 
-const mapStateToProp = state => ({
+const mapStateToProp = (state) => ({
   auth: state.auth,
   isAuthenticated: state.isAuthenticated,
-  err: state.err
+  err: state.err,
 });
 
 export default connect(mapStateToProp, { loginUser, logoutUser })(
