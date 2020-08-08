@@ -4,7 +4,8 @@
   animation-timing-function: ease-out;
 }
 
-.subheading {
+.subheading,
+.animate {
   animation-name: moveInRight;
   animation-duration: 1s;
   animation-timing-function: ease-out;

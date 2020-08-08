@@ -8,7 +8,8 @@ export default class Footer extends Component {
         <footer
           className="copyright text-muted"
           style={{
-            backgroundColor: "#333"
+            backgroundColor: "#333",
+            padding: "80px"
           }}
         >
           <div className="container">

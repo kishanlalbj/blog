@@ -9,34 +9,47 @@ const postRouter = require("./routes/articles/articleRouter");
 const authRouter = require("./auth/auth");
 const profileRouter = require("./routes/profiles/profileRouter");
 const adminRouter = require("./routes/admin/adminRouter");
+const helmet = require("helmet");
+const path = require("path");
+
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const app = express();
-console.log(process.env.NODE_ENV, process.env.MONGODB_URL);
 
 mongoose
   .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-    useFindAndModify: false
+    useFindAndModify: false,
   })
-  .then(response => {
+  .then((response) => {
     console.log("MongoDB Connected");
   })
-  .catch(err => {
+  .catch((err) => {
     console.log(err);
   });
 
 app.use(cors());
+app.use(helmet());
 app.use(logger("dev"));
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req, res, next) {
+
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "'unsafe-inline'"],
+    styleSrc: ["'self'", "https://fonts.googleapis.com", "https://ssl.gstatic.com", "'unsafe-inline'"],
+    fontSrc: ["'self'", "https://fonts.gstatic.com", "https://ssl.gstatic.com", "'unsafe-inline'"]
+  }
+}));
+
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE,OPTIONS");
   res.header(
@@ -46,27 +59,17 @@ app.use(function(req, res, next) {
   next();
 });
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "client", "build")));
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build"));
-//   });
-// }
 
 if (process.env.NODE_ENV === "production") {
   // Exprees will serve up production assets
-  app.use(express.static("client/build"));
+  app.use(express.static(path.join(__dirname, "client", "build")));
 
   // Express serve up index.html file if it doesn't recognize route
-  const path = require("path");
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build"));
+
+    res.sendFile(path.join(__dirname, "client", "build"));
   });
 }
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-// });
 
 require("./auth/passport")(passport);
 

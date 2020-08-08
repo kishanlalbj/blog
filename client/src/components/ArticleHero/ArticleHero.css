@@ -1,3 +1,25 @@
 .article-hero {
   background: url("https://ak0.picdn.net/shutterstock/videos/1013533100/thumb/1.jpg");
+  background-attachment: fixed;
+}
+
+.article-title {
+  animation-name: moveInLeft;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  80% {
+    transform: translateX(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
 }

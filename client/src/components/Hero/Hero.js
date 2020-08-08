@@ -15,11 +15,14 @@ export default class Hero extends Component {
             style={
               !this.props.isEdit
                 ? {
-                    backgroundImage: `url('${background1}')`
-                  }
+                  backgroundImage: `url('${background1}')`,
+                  backgroundAttachment: "fixed",
+                }
                 : {
-                    backgroundImage: `url('${background}')`
-                  }
+                  backgroundImage: `url('${background}')`,
+                  backgroundAttachment: "fixed",
+
+                }
             }
           ></div>
           <div className="container">
@@ -29,6 +32,7 @@ export default class Hero extends Component {
                   {this.props.isAbout ? (
                     <div>
                       <img
+                        className="animate"
                         style={{
                           backgroundColor: "white",
                           borderRadius: "4000px"
@@ -40,13 +44,13 @@ export default class Hero extends Component {
                       />
                     </div>
                   ) : (
-                    <>
-                      <h1 className="main-heading">Scribbles</h1>
-                      <span className="subheading">
-                        Things inside my head are now here
+                      <>
+                        <h1 className="main-heading">Scribbles</h1>
+                        <span className="subheading">
+                          Things inside my head are now here
                       </span>
-                    </>
-                  )}
+                      </>
+                    )}
                 </div>
               </div>
             </div>

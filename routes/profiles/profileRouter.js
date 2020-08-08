@@ -30,7 +30,7 @@ var upload = multer({ storage: storage });
 
 router.get(
   "/",
-  passport.authenticate("jwt", { session: false }),
+
   (req, res) => {
     try {
       profileController.getProfile(

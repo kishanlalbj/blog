@@ -9,18 +9,15 @@ class ArticleHero extends Component {
     background: "",
   };
 
-  // giveLike = () => {
-  //   this.props.giveLike(!this.state.isLiked);
-  // };
 
   render() {
-    // console.log(this.props.comments);
     return (
       <div>
         <header
           className="masthead"
           style={{
             background: `url(${Life})`,
+            backgroundAttachment: "fixed",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             height: "100vh",
@@ -31,7 +28,7 @@ class ArticleHero extends Component {
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
                 <div className="post-heading">
-                  <h1>{this.props.articleTitle}</h1>
+                  <h1 className="article-title">{this.props.articleTitle}</h1>
                   <h2 className="subheading">
                     {this.props.articleSubtitle}
                   </h2>{" "}
