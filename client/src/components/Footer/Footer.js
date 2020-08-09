@@ -15,7 +15,7 @@ export default class Footer extends Component {
           <div className="container">
             <center>
               <p className="copyright">Copyrights @ 2020</p>
-              <p className="copyright">Scribbles v1.5.7</p>
+              <p className="copyright">Scribbles v1.5.8</p>
             </center>
           </div>
         </footer>
