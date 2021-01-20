@@ -10,7 +10,7 @@ export default function Comment(props) {
       <Card.Header>
         <Row>
           <Col md={9}>
-            {props.comment.commenterName} -{" "}
+            <strong>{props.comment.commenterName}</strong> -{" "}
             {moment(props.comment.createdOn).format("MMM D, YYYY h:mm a")}
           </Col>
           <Col md={3}>
