@@ -19,9 +19,9 @@ code {
  */
 
 body {
-  font-size: 20px;
+  font-size: 16px;
   color: #212529;
-  font-family: "Lora", "Times New Roman", serif;
+  font-family: "Lora", sans-serif;
 }
 
 p {
