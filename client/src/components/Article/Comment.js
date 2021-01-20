@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
-import { Card, Row, Col } from "react-bootstrap";
+import { Card, Row, Col, Form, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  // faReply,
+  faPaperPlane,
+} from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
 
-export default function Comment(props) {
+function Comment(props) {
+  console.log(props.auth);
+
+  const [toggleReply, setToggleReply] = useState(false);
+  const [replyName, setReplyName] = useState("");
+  const [replyText, setReplyText] = useState("");
+
+  const replyToComment = (commentId) => {
+    props.replyToComment(commentId, { replyName, replyText });
+    setReplyName("");
+    setReplyText("");
+  };
+
   return (
     <Card>
       <Card.Header>
@@ -19,14 +36,20 @@ export default function Comment(props) {
                 float: "right",
               }}
             >
-              {/* <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faReply} /> */}
-              &nbsp; &nbsp;
-              <FontAwesomeIcon
+              {/* <FontAwesomeIcon
                 style={{ cursor: "pointer" }}
-                color="crimson"
-                onClick={() => props.deleteComment(props.comment._id)}
-                icon={faTrash}
-              />
+                onClick={() => setToggleReply(!toggleReply)}
+                icon={faReply}
+              /> */}
+              &nbsp; &nbsp;
+              {props.auth.isAuthenticated ? (
+                <FontAwesomeIcon
+                  style={{ cursor: "pointer" }}
+                  color="crimson"
+                  onClick={() => props.deleteComment(props.comment._id)}
+                  icon={faTrash}
+                />
+              ) : null}
             </div>
           </Col>
         </Row>
@@ -34,11 +57,71 @@ export default function Comment(props) {
 
       <Card.Body>
         <Card.Text>
-          <Row>
-            <Col md={8}>{props.comment.commentText}</Col>
-          </Row>
+          <p>{props.comment.commentText}</p>
+          <Card.Link
+            style={{
+              cursor: "pointer",
+              color: "blue",
+            }}
+            onClick={() => setToggleReply(!toggleReply)}
+          >
+            Replies ({props.comment.replies.length})
+          </Card.Link>
+          {toggleReply ? (
+            <>
+              <br></br>
+              {props.comment.replies.map((reply) => (
+                <>
+                  <br></br>
+                  <Card body>
+                    <strong>{reply.name}</strong> - {reply.text}
+                  </Card>
+                </>
+              ))}
+            </>
+          ) : null}
         </Card.Text>
       </Card.Body>
+
+      {toggleReply ? (
+        <Card.Body>
+          <Form>
+            <Row>
+              <Col md={3} style={{ marginTop: "5px" }}>
+                <FormControl
+                  type="text"
+                  placeholder="Your (real) name"
+                  value={replyName}
+                  onChange={(e) => setReplyName(e.target.value)}
+                ></FormControl>
+              </Col>
+              <Col md={8} style={{ marginTop: "5px" }}>
+                <FormControl
+                  type="text"
+                  placeholder="Your Reply"
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                ></FormControl>
+              </Col>
+              <Col md={1} style={{ marginTop: "10px" }}>
+                <FontAwesomeIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={() => replyToComment(props.comment._id)}
+                  icon={faPaperPlane}
+                />
+              </Col>
+            </Row>
+          </Form>
+        </Card.Body>
+      ) : null}
     </Card>
   );
 }
+
+const mapStateToProp = (state) => ({
+  auth: state.auth,
+  isAuthenticated: state.isAuthenticated,
+  err: state.err,
+});
+
+export default connect(mapStateToProp)(Comment);

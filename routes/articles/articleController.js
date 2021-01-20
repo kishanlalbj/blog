@@ -131,6 +131,21 @@ const deleteComment = async (articleId, commentId, successCB, errorCB) => {
   }
 };
 
+const addReply = async (articleId, commentId, reply, successCB, errorCB) => {
+  let replyResp = await Article.findOneAndUpdate(
+    {
+      _id: articleId,
+      "comments._id": commentId,
+    },
+    {
+      $push: { "comments.$.replies": reply },
+    },
+    { new: true }
+  );
+
+  successCB(replyResp);
+};
+
 module.exports = {
   getArticles,
   addArticle,
@@ -138,6 +153,7 @@ module.exports = {
   updateArticle,
   postComment,
   deleteComment,
+  addReply,
   getArticle,
   getDraftArticles,
   saveForLater,

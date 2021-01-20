@@ -74,16 +74,44 @@ export default class Article extends Component {
 
   deleteComment = async (commentId) => {
     console.log("Called", commentId);
+
     let resp = await axios.delete("/api/articles/comment/delete", {
       data: {
         articleId: this.props.match.params.id,
         commentId: commentId,
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
       },
     });
 
     console.log(resp);
     this.setState({ comments: resp.data.comments });
   };
+
+  replyToComment = async (commentId, replyObj) => {
+    const config = {
+      headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` },
+    };
+    console.log("Comment", commentId, replyObj);
+
+    let resp = await axios.post(
+      "/api/articles/comment/reply",
+      {
+        articleId: this.props.match.params.id,
+        commentId: commentId,
+        replyObj: {
+          name: replyObj.replyName,
+          text: replyObj.replyText,
+        },
+      },
+      config
+    );
+    console.log(resp.data);
+
+    this.setState({ comments: resp.data.comments });
+  };
+
   // giveLike = () => {
   //   let copy = { ...this.state.article };
   //   copy.likes++;
@@ -133,6 +161,7 @@ export default class Article extends Component {
                             <Comment
                               comment={comment}
                               deleteComment={this.deleteComment}
+                              replyToComment={this.replyToComment}
                             />
                             <br></br>
                           </Col>

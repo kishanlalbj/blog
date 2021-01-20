@@ -234,6 +234,27 @@ router.delete(
   }
 );
 
+router.post("/comment/reply", (req, res) => {
+  try {
+    articleController.addReply(
+      req.body.articleId,
+      req.body.commentId,
+      req.body.replyObj,
+      (resp) => {
+        console.log(",REPLY", resp);
+        res.send(resp);
+      },
+      (error) => {
+        console.log(error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
 router.post(
   "/draft",
   passport.authenticate("jwt", { session: false }),

@@ -39,15 +39,26 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "'unsafe-inline'"],
-    styleSrc: ["'self'", "https://fonts.googleapis.com", "https://ssl.gstatic.com", "'unsafe-inline'"],
-    fontSrc: ["'self'", "https://fonts.gstatic.com", "https://ssl.gstatic.com", "'unsafe-inline'"]
-  }
-}));
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: [
+        "'self'",
+        "https://fonts.googleapis.com",
+        "https://ssl.gstatic.com",
+        "'unsafe-inline'",
+      ],
+      fontSrc: [
+        "'self'",
+        "https://fonts.gstatic.com",
+        "https://ssl.gstatic.com",
+        "'unsafe-inline'",
+      ],
+    },
+  })
+);
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -59,22 +70,29 @@ app.use(function (req, res, next) {
   next();
 });
 
+require("./auth/passport")(passport);
 
 if (process.env.NODE_ENV === "production") {
   // Exprees will serve up production assets
   app.use(express.static(path.join(__dirname, "client", "build")));
 
   // Express serve up index.html file if it doesn't recognize route
-  app.get("*", (req, res) => {
-
-    res.sendFile(path.join(__dirname, "client", "build"));
-  });
 }
-
-require("./auth/passport")(passport);
 
 app.use("/api/articles/", postRouter);
 app.use("/api/admin/", adminRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/auth/", authRouter);
+app.use(express.static(path.join(__dirname, "client", "build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build"));
+});
+
+if (process.env.NODE_ENV === "production") {
+  // Exprees will serve up production assets
+  app.use(express.static(path.join(__dirname, "client", "build")));
+
+  // Express serve up index.html file if it doesn't recognize route
+}
+
 module.exports = app;
