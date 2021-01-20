@@ -5,10 +5,10 @@ const getArticles = (successCB, errorCB) => {
   Article.find({ isPrivate: false })
     .sort({ createdOn: -1 })
     .then(
-      articles => {
+      (articles) => {
         successCB(articles);
       },
-      err => {
+      (err) => {
         errorCB(err);
       }
     );
@@ -17,22 +17,22 @@ const getArticles = (successCB, errorCB) => {
 const getDraftArticles = (successCB, errorCB) => {
   Article.find({ isPrivate: true })
     .sort({ createdOn: -1 })
-    .then(drafts => {
+    .then((drafts) => {
       console.log(JSON.stringify(drafts, undefined, 2));
       successCB(drafts);
     })
-    .catch(err => {
+    .catch((err) => {
       errorCB(err);
     });
 };
 
 const getArticle = (id, successCB, errorCB) => {
   Article.findById({ _id: id })
-    .then(article => {
+    .then((article) => {
       // console.log(JSON.stringify(article, undefined, 2));
       successCB(article);
     })
-    .catch(err => {
+    .catch((err) => {
       errorCB(err);
     });
 };
@@ -45,16 +45,17 @@ const postComment = (comment, successCB, errorCB) => {
       $push: {
         comments: {
           commenterName: comment.commenterName,
-          commentText: comment.commentText
-        }
-      }
-    }
+          commentText: comment.commentText,
+        },
+      },
+    },
+    { new: true }
   )
-    .then(response => {
-      // console.log(response);
-      successCB(comment);
+    .then((response) => {
+      // console.log("new Comment", response);
+      successCB(response);
     })
-    .catch(err => {
+    .catch((err) => {
       errorCB(err);
     });
 };
@@ -65,29 +66,29 @@ const addArticle = (article, successCB, errorCB) => {
 
   newarticle
     .save()
-    .then(article => {
+    .then((article) => {
       successCB(article);
     })
-    .catch(err => errorCB(err));
+    .catch((err) => errorCB(err));
 };
 
 const deleteArticle = (articleId, successCB, errorCB) => {
   Article.deleteOne({ _id: articleId })
-    .then(article => {
+    .then((article) => {
       // console.log("Deleted One", article);
       successCB(article);
     })
-    .catch(err => {
+    .catch((err) => {
       errorCB(err);
     });
 };
 
 const deleteDraft = (draftId, successCB, errorCB) => {
   Article.deleteOne({ _id: draftId })
-    .then(draft => {
+    .then((draft) => {
       successCB(draft);
     })
-    .catch(err => {
+    .catch((err) => {
       errorCB(err);
     });
 };
@@ -95,10 +96,10 @@ const deleteDraft = (draftId, successCB, errorCB) => {
 const updateArticle = (article, successCB, errorCB) => {
   // console.log(article);
   Article.updateOne({ _id: article.id }, { $set: article }, { new: true })
-    .then(article => {
+    .then((article) => {
       successCB(article);
     })
-    .catch(err => {
+    .catch((err) => {
       errorCB(err);
     });
 };
@@ -113,14 +114,32 @@ const saveForLater = async (article, successCB, errorCB) => {
   }
 };
 
+const deleteComment = async (articleId, commentId, successCB, errorCB) => {
+  console.log(articleId, commentId);
+  try {
+    let comment = await Article.findByIdAndUpdate(
+      articleId,
+      {
+        $pull: { comments: { _id: commentId } },
+      },
+      { new: true }
+    );
+    console.log(comment);
+    successCB(comment);
+  } catch (error) {
+    errorCB(error);
+  }
+};
+
 module.exports = {
   getArticles,
   addArticle,
   deleteArticle,
   updateArticle,
   postComment,
+  deleteComment,
   getArticle,
   getDraftArticles,
   saveForLater,
-  deleteDraft
+  deleteDraft,
 };

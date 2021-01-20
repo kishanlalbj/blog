@@ -4,6 +4,8 @@ import ArticleHero from "../../components/ArticleHero/ArticleHero";
 import CommentForm from "../../components/Article/CommentForm";
 import Axios from "axios";
 import Comment from "../../components/Article/Comment";
+import { Row, Col } from "react-bootstrap";
+import axios from "axios";
 
 export default class Article extends Component {
   state = {
@@ -11,7 +13,7 @@ export default class Article extends Component {
     comments: [],
     commenterName: "",
     commentText: "",
-    message: ""
+    message: "",
   };
 
   componentDidMount() {
@@ -19,20 +21,20 @@ export default class Article extends Component {
     window.scrollTo(0, 0);
 
     fetch("/api/articles/" + this.props.match.params.id)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         let copyArticle = { ...this.state.article };
         copyArticle = data;
         this.setState({ article: copyArticle, comments: data.comments }, () => {
           // console.log("Articles", this.state.article);
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -41,27 +43,28 @@ export default class Article extends Component {
     let obj = {
       id: this.props.match.params.id,
       commenterName: name,
-      commentText: comment
+      commentText: comment,
     };
 
     if (comment !== "" && name !== "") {
       Axios.post("/api/articles/comment", obj)
-        .then(response => {
+        .then((response) => {
           let copyArticle = [...this.state.comments];
           copyArticle.push(response.data);
+          console.log("New Comment", response.data);
           this.setState(
             {
-              comments: copyArticle,
+              comments: response.data.comments,
               commenterName: "",
               commentText: "",
-              message: ""
+              message: "",
             },
             () => {
               // console.log("Articles", this.state.comments);
             }
           );
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     } else {
@@ -69,6 +72,18 @@ export default class Article extends Component {
     }
   };
 
+  deleteComment = async (commentId) => {
+    console.log("Called", commentId);
+    let resp = await axios.delete("/api/articles/comment/delete", {
+      data: {
+        articleId: this.props.match.params.id,
+        commentId: commentId,
+      },
+    });
+
+    console.log(resp);
+    this.setState({ comments: resp.data.comments });
+  };
   // giveLike = () => {
   //   let copy = { ...this.state.article };
   //   copy.likes++;
@@ -110,9 +125,20 @@ export default class Article extends Component {
                       onPostComment={this.postComment}
                       message={this.state.message}
                     />
-                    {comments.map(comment => {
-                      return <Comment comment={comment} />;
-                    })}
+
+                    <Row>
+                      {comments.map((comment) => {
+                        return (
+                          <Col key={comment._id} md={12}>
+                            <Comment
+                              comment={comment}
+                              deleteComment={this.deleteComment}
+                            />
+                            <br></br>
+                          </Col>
+                        );
+                      })}
+                    </Row>
                   </div>
                 </div>
               </div>

@@ -210,6 +210,26 @@ router.post("/comment", (req, res) => {
   }
 });
 
+router.delete("/comment/delete", (req, res) => {
+  try {
+    console.log(req.body);
+    articleController.deleteComment(
+      req.body.articleId,
+      req.body.commentId,
+      (comment) => {
+        res.send(comment);
+      },
+      (error) => {
+        console.log(error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
 router.post(
   "/draft",
   passport.authenticate("jwt", { session: false }),
