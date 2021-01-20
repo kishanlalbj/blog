@@ -17,9 +17,13 @@ function Comment(props) {
   const [replyText, setReplyText] = useState("");
 
   const replyToComment = (commentId) => {
-    props.replyToComment(commentId, { replyName, replyText });
-    setReplyName("");
-    setReplyText("");
+    if (replyText && replyName) {
+      props.replyToComment(commentId, { replyName, replyText });
+      setReplyName("");
+      setReplyText("");
+    } else {
+      alert("Type your reply");
+    }
   };
 
   return (
