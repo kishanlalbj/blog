@@ -131,19 +131,19 @@ class Admin extends Component {
         ></div>
         <Container>
           <div style={{ marginTop: "2%" }}>
-            <h2 style={{ float: "left" }}> Dashboard </h2>
+            <h4 style={{ float: "left" }}> Dashboard </h4>
             <div style={{ float: "right" }}>
               &nbsp;
               <Link to="/add" style={{ marginBottom: "2%" }}>
-                <Button variant="dark"> Create Article </Button>
+                <Button variant="dark"> Create </Button>
               </Link>
             </div>
           </div>
-          {/* <br></br> */}
-          <div style={{ clear: "both", marginTop: "50px", height: "100vh" }}>
+          <br></br>
+          <div style={{ clear: "both", marginTop: "50px" }}>
             <div class="row">
               <div class="col-md-9">
-                <div class="card" style={{ minHeight: "70vh" }}>
+                <div class="card" style={{}}>
                   <Table responsive class="table table-striped" hover>
                     <thead class="thead-dark">
                       <tr>
@@ -220,7 +220,12 @@ class Admin extends Component {
                 </div>
               </div>
               <div className="col-md-3">
-                <div className="card text-center bg-secondary text-white mb-3">
+                <div
+                  className="card text-center text-white mb-3"
+                  style={{
+                    background: "#7c3296",
+                  }}
+                >
                   <div className="card-body">
                     <h3>Articles</h3>
                     <h4 className="display-4">
@@ -230,7 +235,7 @@ class Admin extends Component {
                   </div>
                 </div>
 
-                <div className="card text-center bg-success text-white mb-3">
+                <div className="card text-center bg-secondary text-white mb-3">
                   <div className="card-body">
                     <h3>Drafts</h3>
                     <h4 className="display-4">
