@@ -11,7 +11,7 @@ const profileRouter = require("./routes/profiles/profileRouter");
 const adminRouter = require("./routes/admin/adminRouter");
 const helmet = require("helmet");
 const path = require("path");
-
+const gravatar = require("gravatar");
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const app = express();
 
@@ -42,8 +42,9 @@ app.use(passport.session());
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"],
+      defaultSrc: ["'self'", "'unsafe-inline'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "http://www.gravatar.com"],
       styleSrc: [
         "'self'",
         "https://fonts.googleapis.com",
