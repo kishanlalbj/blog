@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
-import avatar from "../../assets/img/avatar.png";
-import { Button, Modal } from "react-bootstrap";
+// import avatar from "../../assets/img/avatar.png";
+import { Button, Container, Modal } from "react-bootstrap";
 import axios from "axios";
 
 class Profile extends Component {
@@ -137,96 +137,100 @@ class Profile extends Component {
         ></div>
         <br></br>
         <div>
-          <div className="row">
-            <div className="col-md-3">
-              <center>
-                <img
-                  src={avatar}
-                  alt="avatar"
-                  style={{
-                    borderRadius: "10000px",
-                  }}
-                  className="d-block img-fluid mb-3"
-                  width="248"
-                />
+          <Container>
+            <div className="row">
+              <div className="col-md-3">
+                <center>
+                  <img
+                    src={
+                      "http://www.gravatar.com/avatar/ea1b54256c03bb64e0d1b49c46de64e8?s=200&r=pg&d=mm"
+                    }
+                    alt="avatar"
+                    style={{
+                      borderRadius: "10000px",
+                    }}
+                    className="d-block img-fluid mb-3 non-draggable"
+                    width="200"
+                  />
 
-                {/* <input type="file" onChange={this.uploadImage} disabled /> */}
-                <br></br>
-                <br></br>
+                  {/* <input type="file" onChange={this.uploadImage} disabled /> */}
+                  <br></br>
+                  <br></br>
 
-                <button
+                  {/* <button
                   disabled
                   onClick={this.updateImage}
                   style={{ width: "66%" }}
                   className="btn btn-danger"
                 >
                   upload
-                </button>
-              </center>
-            </div>
-            <div className="col-md-9">
-              {/* <h4>Edit Profile</h4> */}
-              <div class="card">
-                <div className="card-body">
-                  <form>
-                    <div className="form-group">
-                      <label for="name">First Name</label>
-                      <input
-                        name="firstName"
-                        type="text"
-                        className="form-control"
-                        value={this.state.firstName}
-                        onChange={this.handleChange}
-                      ></input>
-                    </div>
-                    <div className="form-group">
-                      <label for="name">Last Name</label>
-                      <input
-                        name="lastName"
-                        type="text"
-                        className="form-control"
-                        value={this.state.lastName}
-                        onChange={this.handleChange}
-                      ></input>
-                    </div>
-                    <div className="form-group">
-                      <label for="email">Email</label>
-                      <input
-                        name="email"
-                        type="email"
-                        className="form-control"
-                        value={this.state.email}
-                        onChange={this.handleChange}
-                      ></input>
-                    </div>
-                    <div className="form-group">
-                      <label for="bio">Bio</label>
-                      <textarea
-                        className="form-control"
-                        name="bio"
-                        value={this.state.bio}
-                        onChange={this.handleChange}
-                      ></textarea>
-                    </div>
-                    <center>
-                      <Button
-                        className="btn btn-primary"
-                        onClick={this.onSaveProfile.bind(this, this.state.id)}
-                        variant="primary"
-                      >
-                        Save Changes
-                        {/* <i className="fa-floppy-o"> </i> */}
-                      </Button>
-                      &nbsp;
-                      <Link to="/admin">
-                        <Button variant="secondary">Cancel</Button>
-                      </Link>
-                    </center>
-                  </form>
+                </button> */}
+                </center>
+              </div>
+              <div className="col-md-9">
+                {/* <h4>Edit Profile</h4> */}
+                <div class="card">
+                  <div className="card-body">
+                    <form>
+                      <div className="form-group">
+                        <label for="name">First Name</label>
+                        <input
+                          name="firstName"
+                          type="text"
+                          className="form-control"
+                          value={this.state.firstName}
+                          onChange={this.handleChange}
+                        ></input>
+                      </div>
+                      <div className="form-group">
+                        <label for="name">Last Name</label>
+                        <input
+                          name="lastName"
+                          type="text"
+                          className="form-control"
+                          value={this.state.lastName}
+                          onChange={this.handleChange}
+                        ></input>
+                      </div>
+                      <div className="form-group">
+                        <label for="email">Email</label>
+                        <input
+                          name="email"
+                          type="email"
+                          className="form-control"
+                          value={this.state.email}
+                          onChange={this.handleChange}
+                        ></input>
+                      </div>
+                      <div className="form-group">
+                        <label for="bio">Bio</label>
+                        <textarea
+                          className="form-control"
+                          name="bio"
+                          value={this.state.bio}
+                          onChange={this.handleChange}
+                        ></textarea>
+                      </div>
+                      <center>
+                        <Button
+                          className="btn btn-primary"
+                          onClick={this.onSaveProfile.bind(this, this.state.id)}
+                          variant="primary"
+                        >
+                          Save Changes
+                          {/* <i className="fa-floppy-o"> </i> */}
+                        </Button>
+                        &nbsp;
+                        <Link to="/admin">
+                          <Button variant="secondary">Cancel</Button>
+                        </Link>
+                      </center>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Container>
         </div>
 
         <Modal show={this.state.showModal} onHide={this.toggleModal}>

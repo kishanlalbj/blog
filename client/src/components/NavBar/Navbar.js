@@ -5,7 +5,7 @@ import Login from "../Login/Login";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "../../actions/authActions";
-import avatar from "../../assets/img/avatar.png";
+// import avatar from "../../assets/img/avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFolderOpen,
@@ -89,11 +89,19 @@ class Navbar extends Component {
                     About
                   </Link>
                 </li>
-
+                {console.log("-----AVATAR-----", this.props.user)}
                 {this.props.auth.isAuthenticated ? (
                   <>
                     <NavDropdown
-                      title={<img src={avatar} width="24" alt="avatar" />}
+                      title={
+                        <img
+                          src={
+                            "http://www.gravatar.com/avatar/ea1b54256c03bb64e0d1b49c46de64e8?s=200&r=pg&d=mm"
+                          }
+                          width="24"
+                          alt="avatar"
+                        />
+                      }
                       id="collasible-nav-dropdown"
                       className="nav-item"
                       color="white"
