@@ -23,15 +23,19 @@ class ArticleBuilder extends Component {
     articleSubtitle: "",
     savedArticleId: "",
     articleCategories: [
+      "Fashion",
       "Life",
       "Travel",
       "Romance",
       "Random Thoughts",
       "Life Style",
+      "Love",
       "Retro",
       "Family",
       "Nature",
-      "Fashion",
+      "Destiny",
+      "Food",
+      "Music",
     ],
     articleCategory: "",
     articleCover: "",
@@ -180,8 +184,9 @@ class ArticleBuilder extends Component {
           style={{ backgroundColor: "black", height: "65px" }}
         ></div>
 
-        <Container style={{ marginTop: "10px" }}>
-          <h2>New Article</h2>
+        <Container style={{ marginTop: "2%" }}>
+          <h4>New Article</h4>
+          <br></br>
           <Form>
             <Form.Row>
               <Col>
@@ -276,7 +281,7 @@ class ArticleBuilder extends Component {
               </Col>
             </Form.Row>
           </Form>
-
+          <br></br>
           <center style={{ clear: "both", marginTop: "50px" }}>
             <Button variant="primary" value="Create" onClick={this.postArticle}>
               Publish

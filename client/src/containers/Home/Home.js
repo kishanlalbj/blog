@@ -1,37 +1,41 @@
 import React, { Component } from "react";
 import Hero from "../../components/Hero/Hero";
 import ArticlePreview from "../../components/Article/ArticlePreview";
-import { Button } from "react-bootstrap";
 import moment from "moment";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowCircleRight,
+  faArrowCircleLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 class Home extends Component {
   state = {
     articles: [],
     page: 1,
     limit: 3,
-    pagination: {}
+    pagination: {},
   };
 
-  getArticles = page => {
+  getArticles = (page) => {
     axios
       .get(`/api/articles?page=${page}&limit=${this.state.limit}`)
       // .then(response => response.json())
-      .then(response => {
+      .then((response) => {
         // console.log(response.data);
 
         if (response.data.results.length === 0) {
           this.setState({
-            message: "No Articles Found"
+            message: "No Articles Found",
           });
         } else {
           this.setState({
             articles: response.data.results,
-            pagination: response.data
+            pagination: response.data,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -40,7 +44,7 @@ class Home extends Component {
     this.getArticles(this.state.page);
   }
 
-  openArticle = id => {
+  openArticle = (id) => {
     this.props.history.push(`/article/${id}`);
   };
 
@@ -67,7 +71,7 @@ class Home extends Component {
                   <p>No articles found</p>
                 </center>
               ) : (
-                articles.map(article => {
+                articles.map((article) => {
                   return (
                     <ArticlePreview
                       onClick={() => this.openArticle(article._id)}
@@ -87,25 +91,38 @@ class Home extends Component {
 
               <div className="">
                 {this.state.pagination.previous !== undefined ? (
-                  <Button
-                    className="btn btn-primary float-left"
-                    style={{ borderRadius: "2222000px" }}
+                  // <Button
+                  //   className="btn btn-primary float-left"
+                  //   style={{ borderRadius: "2222000px" }}
+                  //   onClick={this.previous}
+                  // >
+                  //   <i className="fa fa-arrow-left"></i>
+                  //   {/* &larr; */}
+                  // </Button>
+                  <FontAwesomeIcon
+                    style={{ cursor: "pointer" }}
+                    icon={faArrowCircleLeft}
                     onClick={this.previous}
-                  >
-                    <i className="fa fa-arrow-left"></i>
-                    {/* &larr; */}
-                  </Button>
+                    size="lg"
+                  />
                 ) : null}
 
                 {this.state.pagination.next !== undefined ? (
-                  <Button
-                    className="btn btn-primary float-right"
-                    style={{ borderRadius: "122000px" }}
+                  // <Button
+                  //   className="btn btn-primary float-right"
+                  //   style={{ borderRadius: "122000px" }}
+                  //   onClick={this.next}
+                  // >
+                  //   <i className="fa fa-arrow-right"></i>
+                  //   {/* &rarr; */}
+                  // </Button>
+                  <FontAwesomeIcon
+                    className="float-right"
+                    style={{ cursor: "pointer" }}
+                    icon={faArrowCircleRight}
                     onClick={this.next}
-                  >
-                    <i className="fa fa-arrow-right"></i>
-                    {/* &rarr; */}
-                  </Button>
+                    size="lg"
+                  />
                 ) : null}
               </div>
             </div>

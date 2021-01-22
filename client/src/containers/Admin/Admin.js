@@ -4,6 +4,9 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container, Button, Table, Modal } from "react-bootstrap";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 class Admin extends Component {
   state = {
@@ -130,12 +133,18 @@ class Admin extends Component {
           style={{ backgroundColor: "black", height: "65px" }}
         ></div>
         <Container>
-          <div style={{ marginTop: "2%" }}>
+          <div style={{ marginTop: "3%" }}>
             <h4 style={{ float: "left" }}> Dashboard </h4>
             <div style={{ float: "right" }}>
               &nbsp;
               <Link to="/add" style={{ marginBottom: "2%" }}>
-                <Button variant="dark"> Create </Button>
+                {/* <Button variant="dark"> Create </Button> */}
+
+                <FontAwesomeIcon
+                  style={{ cursor: "pointer" }}
+                  icon={faPlusCircle}
+                  size="2x"
+                />
               </Link>
             </div>
           </div>
