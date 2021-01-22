@@ -6,22 +6,23 @@ class About extends Component {
     firstName: "",
     lastName: "",
     email: "",
-    bio: ""
+    bio: "",
   };
 
   componentDidMount() {
     fetch("/api/profile")
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         // console.log(data);
         this.setState({
           firstName: data[0].firstName,
           lastName: data[0].lastName,
           email: data[0].email,
-          bio: data[0].bio
+          avatar: data[0].avatar,
+          bio: data[0].bio,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -29,7 +30,7 @@ class About extends Component {
     return (
       <div
         style={{
-          height: "100vh"
+          height: "100vh",
         }}
       >
         <Hero isAbout={true} isEdit={true} />
@@ -38,7 +39,7 @@ class About extends Component {
             <div
               className="col-lg-8 col-md-10 mx-auto"
               style={{
-                fontFamily: "Lora"
+                fontFamily: "Lora",
               }}
             >
               <center>

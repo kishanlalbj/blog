@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const User = require("../models/User");
+const gravatar = require("gravatar");
 
 router.post("/register", (req, res) => {
   User.findOne({ email: req.body.email }).then((user) => {
@@ -49,11 +50,21 @@ router.post("/login", (req, res) => {
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
         if (err) throw err;
         if (isMatch) {
+          const avatar = gravatar.url("pallavi.sai78@gmail.com", {
+            s: "200", //size
+            r: "pg", //rating
+            d: "mm", //default size
+          });
+
           const payload = {
             id: user._id,
             email: user.email,
             name: user.firstName + " " + user.lastName,
+            avatar: user.avatar,
           };
+
+          console.log("Payload is", payload);
+
           jwt.sign(
             payload,
             process.env.JWT_SECRET,

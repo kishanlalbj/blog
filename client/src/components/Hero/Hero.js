@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../containers/App.css";
 import "./Hero.css";
-import avatar from "../../assets/img/avatar.png";
+// import avatar from "../../assets/img/avatar.png";
 import background from "../../assets/img/background.png";
 import background1 from "../../assets/img/background1.jpg";
 
@@ -15,14 +15,13 @@ export default class Hero extends Component {
             style={
               !this.props.isEdit
                 ? {
-                  backgroundImage: `url('${background1}')`,
-                  backgroundAttachment: "fixed",
-                }
+                    backgroundImage: `url('${background1}')`,
+                    backgroundAttachment: "fixed",
+                  }
                 : {
-                  backgroundImage: `url('${background}')`,
-                  backgroundAttachment: "fixed",
-
-                }
+                    backgroundImage: `url('${background}')`,
+                    backgroundAttachment: "fixed",
+                  }
             }
           ></div>
           <div className="container">
@@ -32,25 +31,27 @@ export default class Hero extends Component {
                   {this.props.isAbout ? (
                     <div>
                       <img
-                        className="animate"
+                        className="animate non-draggable"
                         style={{
                           backgroundColor: "white",
-                          borderRadius: "4000px"
+                          borderRadius: "4000px",
                         }}
-                        src={avatar}
+                        src={
+                          "http://www.gravatar.com/avatar/ea1b54256c03bb64e0d1b49c46de64e8?s=200&r=pg&d=mm"
+                        }
                         alt="avatar"
                         height="150"
                         width="150"
                       />
                     </div>
                   ) : (
-                      <>
-                        <h1 className="main-heading">Scribbles</h1>
-                        <span className="subheading">
-                          Things inside my head are now here
+                    <>
+                      <h1 className="main-heading">Scribbles</h1>
+                      <span className="subheading">
+                        Things inside my head are now here
                       </span>
-                      </>
-                    )}
+                    </>
+                  )}
                 </div>
               </div>
             </div>
